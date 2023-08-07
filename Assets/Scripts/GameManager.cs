@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour
 
     GameObject cardSlot;
     GameObject card;
-    Card card1;
-    Card card2;
+    Chae.Card card1;
+    Chae.Card card2;
     AudioManager audioManager;
     UIEffectManager uIEffectManager;
 
