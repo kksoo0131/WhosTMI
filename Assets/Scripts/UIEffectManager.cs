@@ -16,7 +16,7 @@ public class UIEffectManager : MonoBehaviour
     private class EffectData
     {
         System.Type[] types = new Type[] {
-            // Effect class ¸¦ ³ª¿­ÇØ¼­ ³Ö¾îµÒ.
+            // Effect class ë¥¼ ë‚˜ì—´í•´ì„œ ë„£ì–´ë‘ .
             // typeof(Wave),
             typeof(Spiral),
             // typeof(Center),
@@ -42,8 +42,8 @@ public class UIEffectManager : MonoBehaviour
         {
             mEffectObject = _object;
             mType = _type;
-            if (_start != null) mStart = _start;
-            if (_end != null) mEnd = _end;
+            if (_start != null) mStart = _start.Value;
+            if (_end != null) mEnd = _end.Value;
             effectClass = Activator.CreateInstance(types[(int)_type]);
         }
         public EffectData(GameObject _object, UIType _type, Vector3? _position)
@@ -56,30 +56,29 @@ public class UIEffectManager : MonoBehaviour
     }
     private List<EffectData> mEffectList;
     /// <summary>
-    /// ¿ÀºêÁ§Æ®(_object)¿¡ È¿°ú(_type)¸¦ Update()¿¡¼­ °è¼ÓÇÏ¿© °è»êÇÏµµ·Ï µ¿ÀÛ¸®½ºÆ®¿¡ ³Ö´Â´Ù.
+    /// ì˜¤ë¸Œì íŠ¸(_object)ì— íš¨ê³¼(_type)ë¥¼ Update()ì—ì„œ ê³„ì†í•˜ì—¬ ê³„ì‚°í•˜ë„ë¡ ë™ì‘ë¦¬ìŠ¤íŠ¸ì— ë„£ëŠ”ë‹¤.
     /// </summary>
-    /// <param name="_object">È¿°ú Àû¿ëÇÏ´Â ¿ÀºêÁ§Æ®</param>
-    /// <param name="_type">È¿°ú Á¾·ù(MoveWave, MoveSpiral, MoveCenter)¿¡¸¸ »ç¿ë</param>
-    /// <param name="_start">½ÃÀÛÁ¡</param>
-    /// <param name="_end">µµÂøÁ¡</param>
+    /// <param name="_object">íš¨ê³¼ ì ìš©í•˜ëŠ” ì˜¤ë¸Œì íŠ¸</param>
+    /// <param name="_type">íš¨ê³¼ ì¢…ë¥˜(MoveWave, MoveSpiral, MoveCenter)ì—ë§Œ ì‚¬ìš©</param>
+    /// <param name="_start">ì‹œì‘ì </param>
+    /// <param name="_end">ë„ì°©ì </param>
     /// <returns></returns>
-    /// <exception cref="System.Exception">ÇÊ¿äÇÑ ÀÔ·Â ÀÎ¼ö°¡ nullÀÎ °æ¿ì¿¡ ¿¹¿ÜÃ³¸®ÇÔ.</exception>
+    /// <exception cref="System.Exception">í•„ìš”í•œ ì…ë ¥ ì¸ìˆ˜ê°€ nullì¸ ê²½ìš°ì— ì˜ˆì™¸ì²˜ë¦¬í•¨.</exception>
     public bool StartEffect(GameObject _object, UIType _type, Vector3? _start, Vector3? _end)
     {
         if (_object == null) { throw new System.Exception("null GameObject"); }
         if (_type > UIType.Flip) { throw new System.Exception("Unknown UI Effect"); }
         if (_type > UIType.MoveCenter) { return false; }
         // if (_start == null || _end == null) { return false; }
-
         mEffectList.Add(new EffectData(_object, _type, _start, _end));
         return true;
     }
     /// <summary>
-    /// ¿ÀºêÁ§Æ®(_object)¿¡ È¿°ú(_type)¸¦ Update()¿¡¼­ °è¼ÓÇÏ¿© °è»êÇÏµµ·Ï µ¿ÀÛ¸®½ºÆ®¿¡ ³Ö´Â´Ù.
+    /// ì˜¤ë¸Œì íŠ¸(_object)ì— íš¨ê³¼(_type)ë¥¼ Update()ì—ì„œ ê³„ì†í•˜ì—¬ ê³„ì‚°í•˜ë„ë¡ ë™ì‘ë¦¬ìŠ¤íŠ¸ì— ë„£ëŠ”ë‹¤.
     /// </summary>
-    /// <param name="_object">È¿°ú Àû¿ëÇÏ´Â ¿ÀºêÁ§Æ®</param>
-    /// <param name="_type">È¿°ú Á¾·ù(PopupStar, PopupSkull, PopupName, ReduceTime, ChangeColor, Flip)¿¡¸¸ »ç¿ë</param>
-    /// <param name="_position">Àû¿ë ÁöÁ¡</param>
+    /// <param name="_object">íš¨ê³¼ ì ìš©í•˜ëŠ” ì˜¤ë¸Œì íŠ¸</param>
+    /// <param name="_type">íš¨ê³¼ ì¢…ë¥˜(PopupStar, PopupSkull, PopupName, ReduceTime, ChangeColor, Flip)ì—ë§Œ ì‚¬ìš©</param>
+    /// <param name="_position">ì ìš© ì§€ì </param>
     /// <returns></returns>
     /// <exception cref="System.Exception"></exception>
     public bool StartEffect(GameObject _object, UIType _type, Vector3? _position)
@@ -114,14 +113,14 @@ public class UIEffectManager : MonoBehaviour
         {
             if (data.Type <= UIType.MoveCenter)
             {
-                var effect = data as MoveEffectInterface;
+                var effect = data.effectClass as MoveEffectInterface;
                 var run = effect.Run(data.Object, data.Start, data.End);
                 if (run == false)
                     mEffectList.Remove(data);
             }
             else
             {
-                var effect = data as FixedEffectInterface;
+                var effect = data.effectClass as FixedEffectInterface;
                 var run = effect.Run(data.Object, data.Position);
                 if (run == false)
                     mEffectList.Remove(data);
