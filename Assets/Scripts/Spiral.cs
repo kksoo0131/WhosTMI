@@ -77,7 +77,7 @@ public class Spiral : MoveEffectInterface
             ret.y = mEnd.Value.y + ((_now.y - mEnd.Value.y) * (1 - Mathf.Pow(mAngleSpeed * Time.deltaTime / 2, 2)) + (_now.x - mEnd.Value.x) * mAngleSpeed * Time.deltaTime) *divisor;
             ret.z = mEnd.Value.z;
         }
-        Debug.Log(ret);
+        //Debug.Log(ret);
         return ret;
     }
 }
