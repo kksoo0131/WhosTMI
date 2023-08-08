@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class Spiral : MoveEffectInterface
 {
@@ -16,8 +17,8 @@ public class Spiral : MoveEffectInterface
     {
         ++Count;
         mIsRun = false;
-        mAngleSpeed = 0.01f;
-        mSpeed = 0.01f;
+        mAngleSpeed = 2f;
+        mSpeed = 5f;
     }
     ~Spiral()
     {
@@ -41,6 +42,7 @@ public class Spiral : MoveEffectInterface
         if (mIsRun == false)
         {
             Debug.Log("Spiral Done");
+            mTarget.transform.position = (Vector3)mEnd;
             return false;
         }
         return true;
@@ -65,16 +67,17 @@ public class Spiral : MoveEffectInterface
     private Vector3 CalculatePosition(Vector3 _now)
     {
         Vector3 ret = new Vector3();
-        float r1 = (_now - (Vector3)mStart).magnitude;
+        float r1 = (_now - (Vector3)mEnd).magnitude;
         float r2 = r1 - mSpeed * Time.deltaTime;
         float divisor = r2 / r1;
-        if (r1 < 0.01f) { mIsRun = false; }
+        if ((_now - (Vector3)mEnd).magnitude < 0.01f) { mIsRun = false; }
         else
         {
-            ret.x = (_now.x * (1 - mAngleSpeed * Time.deltaTime / 2) + _now.y * mAngleSpeed * Time.deltaTime) / divisor;
-            ret.y = (_now.y * (1 - mAngleSpeed * Time.deltaTime / 2) + _now.x * mAngleSpeed * Time.deltaTime) / divisor;
-            ret.z = _now.z;
+            ret.x = mEnd.Value.x + ((_now.x - mEnd.Value.x) * (1 - Mathf.Pow(mAngleSpeed * Time.deltaTime / 2, 2)) - (_now.y - mEnd.Value.y) * mAngleSpeed * Time.deltaTime) *divisor;
+            ret.y = mEnd.Value.y + ((_now.y - mEnd.Value.y) * (1 - Mathf.Pow(mAngleSpeed * Time.deltaTime / 2, 2)) + (_now.x - mEnd.Value.x) * mAngleSpeed * Time.deltaTime) *divisor;
+            ret.z = mEnd.Value.z;
         }
+        Debug.Log(ret);
         return ret;
     }
 }

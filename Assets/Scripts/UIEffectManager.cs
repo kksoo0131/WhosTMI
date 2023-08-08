@@ -92,6 +92,8 @@ public class UIEffectManager : MonoBehaviour
         return true;
     }
 
+    
+
     private void Awake()
     {
         if (instance == null)
@@ -109,6 +111,8 @@ public class UIEffectManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        int[] index = new int[mEffectList.Count];
+        int i = 0;
         foreach (EffectData data in mEffectList)
         {
             if (data.Type <= UIType.MoveCenter)
@@ -116,15 +120,25 @@ public class UIEffectManager : MonoBehaviour
                 var effect = data.effectClass as MoveEffectInterface;
                 var run = effect.Run(data.Object, data.Start, data.End);
                 if (run == false)
-                    mEffectList.Remove(data);
+                {
+                    index[i++] = mEffectList.IndexOf(data);
+                }
             }
             else
             {
                 var effect = data.effectClass as FixedEffectInterface;
                 var run = effect.Run(data.Object, data.Position);
                 if (run == false)
-                    mEffectList.Remove(data);
+                {
+                    index[i++] = mEffectList.IndexOf(data);
+                }
             }
+        }
+        --i;
+        while (i >= 0)
+        {
+            mEffectList.RemoveAt(index[i]);
+            --i;
         }
     }
 }
