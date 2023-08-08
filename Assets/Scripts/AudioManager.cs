@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
         Success,
         Fail;
 
-    AudioSource[] audioSources = new AudioSource[5];//MusicType ÀÇ Å©±â
+    AudioSource[] audioSources = new AudioSource[5];//MusicType Ã€Ã‡ Ã…Â©Â±Ã¢
 
     public enum MusicType
     {
