@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,10 +13,22 @@ public class UIEffectManager : MonoBehaviour
         MoveWave, MoveSpiral, MoveCenter, PopupStar, PopupSkull, PopupName, ReduceTime, ChangeColor, Flip
     }
 
-    //Type[] types = 
-
     private class EffectData
     {
+        System.Type[] types = new Type[] {
+            // Effect class 를 나열해서 넣어둠.
+            /*
+            typeof(MoveWave),
+            typeof(MoveSpiral),
+            typeof(MoveCenter),
+            typeof(PopupStar),
+            typeof(PopupSkull),
+            typeof(PopupName),
+            typeof(ReduceTime),
+            typeof(ChangeColor),
+            typeof(Flip)
+            */
+            };
         GameObject mEffectObject;
         UIType mType;
         Vector3? mStart;
@@ -33,14 +46,14 @@ public class UIEffectManager : MonoBehaviour
             mType = _type;
             if (_start != null) mStart = _start;
             if (_end != null) mEnd = _end;
-
+            effectClass = Activator.CreateInstance(types[(int)_type]);
         }
         public EffectData(GameObject _object, UIType _type, Vector3? _position)
         {
             mEffectObject = _object;
             mType = _type;
             if (_position != null) mPosition = _position;
-            
+            effectClass = Activator.CreateInstance(types[(int)_type]);
         }
     }
     private List<EffectData> mEffectList;
@@ -103,11 +116,13 @@ public class UIEffectManager : MonoBehaviour
         {
             if (data.Type <= UIType.MoveCenter)
             {
-                //data.effectClass.Run(data.Object, data.Start, data.End);
+                var effect = data as MoveEffectInterface;
+                effect.Run(data.Object, data.Start, data.End);
             }
             else
             {
-                //data.effectClass.Run(data.Object);
+                var effect = data as FixedEffectInterface;
+                effect.Run(data.Object, data.Position);
             }
         }
     }
