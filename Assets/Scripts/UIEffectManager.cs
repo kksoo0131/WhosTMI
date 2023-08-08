@@ -15,7 +15,7 @@ public class UIEffectManager : MonoBehaviour
         UIType mType;
         Vector3? mStart;
         Vector3? mEnd;
-
+        public dynamic effectClass;
         public GameObject Object { get { return mEffectObject; } }
         public UIType Type { get { return mType; } }
         public Vector3? Start { get { return mStart; } }
@@ -26,6 +26,7 @@ public class UIEffectManager : MonoBehaviour
             mType = _type;
             if (_start != null) mStart = _start;
             if (_end != null) mEnd = _end;
+
         }
     }
     private List<EffectData> mEffectList;
@@ -37,7 +38,7 @@ public class UIEffectManager : MonoBehaviour
     /// <param name="_start">시작점, null일 수 있음</param>
     /// <param name="_end">도착점, null일 수 있음</param>
     /// <returns></returns>
-    /// <exception cref="System.Exception"></exception>
+    /// <exception cref="System.Exception">필요한 입력 인수가 null인 경우에 예외처리함.</exception>
     public bool StartEffect(GameObject _object, UIType _type, Vector3? _start, Vector3? _end)
     {
         if (_object == null) { throw new System.Exception("null GameObject"); }
@@ -58,6 +59,16 @@ public class UIEffectManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        foreach (EffectData data in mEffectList)
+        {
+            if (data.Type <= UIType.MoveCenter)
+            {
+                //data.effectClass.Run(data.Object, data.Start, data.End);
+            }
+            else
+            {
+                //data.effectClass.Run(data.Object);
+            }
+        }
     }
 }
