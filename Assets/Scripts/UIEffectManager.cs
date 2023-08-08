@@ -115,12 +115,16 @@ public class UIEffectManager : MonoBehaviour
             if (data.Type <= UIType.MoveCenter)
             {
                 var effect = data as MoveEffectInterface;
-                effect.Run(data.Object, data.Start, data.End);
+                var run = effect.Run(data.Object, data.Start, data.End);
+                if (run == false)
+                    mEffectList.Remove(data);
             }
             else
             {
                 var effect = data as FixedEffectInterface;
-                effect.Run(data.Object, data.Position);
+                var run = effect.Run(data.Object, data.Position);
+                if (run == false)
+                    mEffectList.Remove(data);
             }
         }
     }
