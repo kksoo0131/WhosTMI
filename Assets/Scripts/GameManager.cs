@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 using KKS;
 using Chae;
 
@@ -24,23 +25,44 @@ namespace KKS
                 }
                 instance = go.GetComponent<GameManager>();
             }
+
         }
 
-        float timeLimit;
-        float selectTime = 5.0f;
-        int stageLeveㅣ;
-        int cardNum = 16;
 
+        public int cardNum;
+        public bool isMatching = false;
+
+        public GameObject stageUI;
+        public GameObject recordUI;
+        public GameObject tryUI;
+        public GameObject resultUI;
+
+        float timeLimit;
+        int stageLevel;
+        int tryNum;
+        float selectTime;
+        float bestTime;
+        bool isSelected = false;
+        
         GameObject cardSlot;
         GameObject card;
+        CardObject selectedCard1;
+        CardObject selectedCard2;
 
-        Card card1;
-        Card card2;
-
-        void GameInit()
+        void GameInit(int _stage)
         {
-            // Audio 배경음악 재생
-            timeLimit = 60.0f;
+            /*AudioManager.audioManager.CancelMusic(AudioManager.MusicType.backGroundMusic2);
+            AudioManager.audioManager.PlayMusic(AudioManager.MusicType.backGroundMusic1);*/
+            stageLevel = _stage;
+            timeLimit = 60.0f - (_stage -1) * 20.0f;
+            tryNum = 0;
+            selectTime = 5.0f;
+            Time.timeScale = 1.0f;
+            CardShuffle();
+            bestTime = PlayerPrefs.GetFloat(stageLevel.ToString());
+            recordUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bestTime.ToString("f2");
+            // 1스테이지 8개 3/2/3
+            // 2스테이지 16개  4 x 4
 
         }
 
@@ -53,50 +75,52 @@ namespace KKS
 
         private void Start()
         {
-            GameInit();
-            CardShuffle();
+            GameInit(1); 
         }
 
         // Update is called once per frame
         void Update()
         {
-            TimerEffect();
-            CardMatch();
+                TimerEffect();
+                StageClear();
         }
 
-        public void SelectCard(GameObject go)
+        public void SelectCard(CardObject _card)
         {
-            // 카드 == Button으로 카드가 클릭되면 이벤트로 발생
+            if (isMatching) return;
+
+            if (!isSelected)
+            {
+                selectedCard1 = _card;
+                isSelected = true;
+            }
+            else if (selectedCard2 == null)
+            {
+                selectedCard2 = _card;
+                isMatching = true;
+                isSelected = false;
+                selectTime = 5.0f;
+                CardMatch();
+            }
+       
+            // 카드 뒤집기
+            /*AudioManager.audioManager.PlayMusic(AudioManager.MusicType.Filp);*/
+            _card.OpenCard();
             
-            
-            // UI 카드 뒤집기 연출 호출
-            // Audio 카드 뒤집기 사운드 호출
+
         }
         void CardMatch()
         {
-            if (card1 == null) return;
+            tryNum++;
+            tryUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = tryNum.ToString();
 
-            selectTime -= Time.deltaTime;
-
-            if (selectTime < 0)
-            {
-                //선택 시간 초과
-
-                // card1를 다시 뒤집어 원상태로 복구
-                card1 = null;
-                selectTime = 5.0f;
-                return;
-
-            }
-
-            if (card2 == null) return;
-
-            if (card1.Match(card2))
+            if (selectedCard1.data.Match(selectedCard2.data))
             {
                 // UI 별 출력
                 // UI 해당 TMI의 이름 출력
-                // Audio 성공 사운드 출력
-
+                /*AudioManager.audioManager.PlayMusic(AudioManager.MusicType.Success);*/
+                selectedCard1.DestroyCard();
+                selectedCard2.DestroyCard();
             }
             // 카드 매칭 실패 
             else
@@ -105,18 +129,27 @@ namespace KKS
                 // UI 시간 감소 효과 호출 : UI를 통해서 txt수정?
                 // UI 해골 출력
                 // UI 색 바꾸기
-                // Audio 실패 사운드 출력
+                /*AudioManager.audioManager.PlayMusic(AudioManager.MusicType.Fail);*/
                 // 실패 메세지 출력
+                selectedCard1.CloseCard();
+                selectedCard2.CloseCard();
             }
 
-            // 두 카드를 모두 다시 뒤집어 원상태로 복구 
-
-            // 여기까지왔다면 두카드를 선택해서 Match를 시도했기 때문에 selecTime 초기화
-            selectTime = 5.0f;
+            selectedCard1 = null;
+            selectedCard2 = null;
         }
 
         void CardShuffle()
         {
+            if (stageLevel == 1)
+            {
+                cardNum = 8;
+            }
+            else
+            {
+                cardNum = 16;
+            }
+
             int[] cards = new int[cardNum];
 
             for (int i = 0; i < cards.Length; i++)
@@ -132,13 +165,42 @@ namespace KKS
                 GameObject newcard = Instantiate(card);
                 newcard.GetComponent<CardObject>().data = new Card(cards[i].ToString());
 
-                /* newcard.transform.Find("front").GetComponent<SpriteRenderer>().sprite
-                     = Resources.Load<Sprite>("Resources/Images/" + cards[i].ToString());*/
+                newcard.transform.Find("front").GetComponent<SpriteRenderer>().sprite
+                     = Resources.Load<Sprite>("Images/rtan" + cards[i].ToString());
 
                 newcard.transform.parent = cardSlot.transform;
-                float endX = cardSlot.transform.position.x + i % 4 * 1.2f;
-                float endY = cardSlot.transform.position.y + i / 4 * 1.2f;
+                float endX;
+                float endY;
+
+                if (stageLevel == 1)
+                {
+                    if (i < 3)
+                    {
+                        endX = cardSlot.transform.position.x + 0.6f + i % 3 * 1.4f;
+                        endY = cardSlot.transform.position.y ;
+                    }
+                    else if (i < 5)
+                    {
+                        endX = cardSlot.transform.position.x + 1.2f + i % 2 * 1.4f;
+                        endY = cardSlot.transform.position.y + 1  * 1.4f;
+                    }
+                    else
+                    {
+                        endX = cardSlot.transform.position.x + 0.6f + i % 3 * 1.4f;
+                        endY = cardSlot.transform.position.y + 2 * 1.4f;
+                    }
+                        
+                }
+                else
+                {
+                    endX = cardSlot.transform.position.x + i % 4 * 1.4f;
+                    endY = cardSlot.transform.position.y + i / 4 * 1.4f;
+                }
+
                 Vector3 endPos = new Vector3(endX, endY, 0);
+
+                // 카드의 갯수에따라서 카드의 배치가 달라지므로
+                // 카드의 position도 그에따라 변경되어야함.
 
 
 
@@ -152,14 +214,69 @@ namespace KKS
         void TimerEffect()
         {
             timeLimit -= Time.deltaTime;
+            recordUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = timeLimit.ToString("f2");
+
+
             if (timeLimit < 10)
             {
-                // Audio 긴박한 배경음으로 배경음을 변경
+                /*AudioManager.audioManager.CancelMusic(AudioManager.MusicType.backGroundMusic1);
+                AudioManager.audioManager.PlayMusic(AudioManager.MusicType.backGroundMusic2);*/
+
+                // UI 시간 감소 강조 효과
+                // timeLimit Image를 setTrue로 변경
+            }
+            else if (timeLimit < 0)
+            {
+                GameEnd();
+            }
+
+            if (isSelected)
+            {
+                selectTime -= Time.deltaTime;
+
+                if (selectTime <= 0)
+                {
+                    selectedCard1.CloseCard();
+                    selectedCard1 = null;
+                    isSelected = false;
+                    selectTime = 5.0f;
+                }
+            }
+                
+        }
+
+        void StageClear()
+        {
+            if (stageLevel > 2)
+            {
+                GameEnd();
+                return;
+            }
+
+            if (cardNum == 0)
+            {
+                string stageKey = stageLevel.ToString();
+                Time.timeScale = 0.0f;
+
+                if (!PlayerPrefs.HasKey(stageKey) || PlayerPrefs.HasKey(stageKey) && PlayerPrefs.GetFloat(stageKey) < timeLimit)
+                {
+                    PlayerPrefs.SetFloat(stageKey, timeLimit);
+                }
+                
+                
+                GameInit(stageLevel + 1);
+
+                // 현재 스테이지의 기록을 저장
             }
         }
 
-
-
+        void GameEnd()
+        {
+            Time.timeScale = 0.0f;
+            resultUI.SetActive(true);
+            resultUI.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = timeLimit.ToString("f2");
+            resultUI.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = tryNum.ToString();
+        }
 
 
     }

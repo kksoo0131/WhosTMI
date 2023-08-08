@@ -610,7 +610,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.493948, g: 0.6687334, b: 0.9433962, a: 0}
+  m_BackGroundColor: {r: 0.4392157, g: 0.59607846, b: 0.9607843, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -924,7 +924,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1507783964}
         m_TargetAssemblyTypeName: Button, Assembly-CSharp
-        m_MethodName: StartBtn
+        m_MethodName: ReadyBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

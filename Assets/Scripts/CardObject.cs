@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Chae;
+using KKS;
 
 /// <summary>
 /// newcard.GetComponent<CardObject>().data = new Chae.Card(string _cardname);
@@ -15,7 +16,8 @@ public class CardObject : MonoBehaviour
 
     public void OpenCard()
     {
-
+        transform.Find("front").gameObject.SetActive(true);
+        transform.Find("back").gameObject.SetActive(false);
     }
 
     public void CloseCard()
@@ -30,11 +32,16 @@ public class CardObject : MonoBehaviour
 
     void CloseCardInvoke()
     {
-
+        transform.Find("front").gameObject.SetActive(false);
+        transform.Find("back").gameObject.SetActive(true);
+        GameManager.Instance.isMatching = false;
+     
     }
 
     void DestroyCardInvoke()
     {
+        GameManager.Instance.cardNum -= 1;
+        GameManager.Instance.isMatching = false;
         Destroy(gameObject);
     }
 }
