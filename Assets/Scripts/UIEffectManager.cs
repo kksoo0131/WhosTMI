@@ -17,7 +17,7 @@ public class UIEffectManager : MonoBehaviour
     {
         System.Type[] types = new Type[] {
             // Effect class 를 나열해서 넣어둠.
-            // typeof(Wave),
+            typeof(Wave),
             typeof(Spiral),
             // typeof(Center),
             typeof(PopStar),

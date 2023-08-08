@@ -34,14 +34,12 @@ public class Spiral : MoveEffectInterface
             mEnd = _end;
             mDir = (Vector2)(mEnd - mStart);
             mDir.Normalize();
-            Debug.Log("Spiral Start");
             _object.transform.position = _start.Value;
         }
         mTarget.transform.position = CalculatePosition(mTarget.transform.position);
 
         if (mIsRun == false)
         {
-            Debug.Log("Spiral Done");
             mTarget.transform.position = (Vector3)mEnd;
             return false;
         }

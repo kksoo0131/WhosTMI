@@ -207,8 +207,8 @@ namespace KKS
                 // UI 움직임 카드효과 호출
                 // 카드 효과에 따라서 startPos을 정하고 효과가 끝나면 endPos에 도달
 
-                //newcard.transform.position = endPos;
                 UIEffectManager.instance.StartEffect(newcard, (UIEffectManager.UIType)0, new Vector3(0, 0, 0), endPos);
+                //UIEffectManager.instance.StartEffect(newcard, (UIEffectManager.UIType)1, new Vector3(0, 0, 0), endPos);
             }
         }
 
