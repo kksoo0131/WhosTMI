@@ -40,10 +40,27 @@ public class AudioManager : MonoBehaviour
     }
 
     public bool PlayMusic(MusicType musicType)
-    {
-        audioSources[(int)musicType].Play();
-
-        return audioSources[(int)musicType].isPlaying;
+    {  
+        if(musicType == MusicType.Fail)
+        {
+            audioSources[(int)musicType].PlayOneShot(Fail);
+            return true;
+        }
+        else if (musicType == MusicType.Success)
+        {
+            audioSources[(int)musicType].PlayOneShot(Success);
+            return true;
+        }
+        else if (musicType == MusicType.Filp)
+        {
+            audioSources[(int)musicType].PlayOneShot(Filp);
+            return true;
+        }
+        else
+        {
+            audioSources[(int)musicType].Play();
+            return audioSources[(int)musicType].isPlaying;
+        }
     }
     public bool CancelMusic(MusicType musicType)
     {
