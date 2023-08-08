@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Chae;
 
 /// <summary>
 /// newcard.GetComponent<CardObject>().data = new Chae.Card(string _cardname);
@@ -9,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public class CardObject : MonoBehaviour
 {
-    public Chae.Card data;
+    public Card data;
     public Animator anim;
 
     public void OpenCard()

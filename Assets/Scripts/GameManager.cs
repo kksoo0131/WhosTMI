@@ -28,7 +28,7 @@ namespace KKS
 
         float timeLimit;
         float selectTime = 5.0f;
-        int stageLeveã…£;
+        int stageLeve¤Ó;
         int cardNum = 16;
 
         GameObject cardSlot;
@@ -39,7 +39,7 @@ namespace KKS
 
         void GameInit()
         {
-            // Audio ë°°ê²½ìŒì•… ì¬ìƒ
+            // Audio ¹è°æÀ½¾Ç Àç»ı
             timeLimit = 60.0f;
 
         }
@@ -66,11 +66,11 @@ namespace KKS
 
         public void SelectCard(GameObject go)
         {
-            // ì¹´ë“œ == Buttonìœ¼ë¡œ ì¹´ë“œê°€ í´ë¦­ë˜ë©´ ì´ë²¤íŠ¸ë¡œ ë°œìƒ
+            // Ä«µå == ButtonÀ¸·Î Ä«µå°¡ Å¬¸¯µÇ¸é ÀÌº¥Æ®·Î ¹ß»ı
             
-            g
-            // UI ì¹´ë“œ ë’¤ì§‘ê¸° ì—°ì¶œ í˜¸ì¶œ
-            // Audio ì¹´ë“œ ë’¤ì§‘ê¸° ì‚¬ìš´ë“œ í˜¸ì¶œ
+            
+            // UI Ä«µå µÚÁı±â ¿¬Ãâ È£Ãâ
+            // Audio Ä«µå µÚÁı±â »ç¿îµå È£Ãâ
         }
         void CardMatch()
         {
@@ -80,9 +80,9 @@ namespace KKS
 
             if (selectTime < 0)
             {
-                //ì„ íƒ ì‹œê°„ ì´ˆê³¼
+                //¼±ÅÃ ½Ã°£ ÃÊ°ú
 
-                // card1ë¥¼ ë‹¤ì‹œ ë’¤ì§‘ì–´ ì›ìƒíƒœë¡œ ë³µêµ¬
+                // card1¸¦ ´Ù½Ã µÚÁı¾î ¿ø»óÅÂ·Î º¹±¸
                 card1 = null;
                 selectTime = 5.0f;
                 return;
@@ -93,25 +93,25 @@ namespace KKS
 
             if (card1.Match(card2))
             {
-                // UI ë³„ ì¶œë ¥
-                // UI í•´ë‹¹ TMIì˜ ì´ë¦„ ì¶œë ¥
-                // Audio ì„±ê³µ ì‚¬ìš´ë“œ ì¶œë ¥
+                // UI º° Ãâ·Â
+                // UI ÇØ´ç TMIÀÇ ÀÌ¸§ Ãâ·Â
+                // Audio ¼º°ø »ç¿îµå Ãâ·Â
 
             }
-            // ì¹´ë“œ ë§¤ì¹­ ì‹¤íŒ¨ 
+            // Ä«µå ¸ÅÄª ½ÇÆĞ 
             else
             {
-                // GM ì‹œê°„ ê°ì†Œ : ì‹¤ì œë¡œ ì‹œê°„ì´ ê°ì†Œ
-                // UI ì‹œê°„ ê°ì†Œ íš¨ê³¼ í˜¸ì¶œ : UIë¥¼ í†µí•´ì„œ txtìˆ˜ì •?
-                // UI í•´ê³¨ ì¶œë ¥
-                // UI ìƒ‰ ë°”ê¾¸ê¸°
-                // Audio ì‹¤íŒ¨ ì‚¬ìš´ë“œ ì¶œë ¥
-                // ì‹¤íŒ¨ ë©”ì„¸ì§€ ì¶œë ¥
+                // GM ½Ã°£ °¨¼Ò : ½ÇÁ¦·Î ½Ã°£ÀÌ °¨¼Ò
+                // UI ½Ã°£ °¨¼Ò È¿°ú È£Ãâ : UI¸¦ ÅëÇØ¼­ txt¼öÁ¤?
+                // UI ÇØ°ñ Ãâ·Â
+                // UI »ö ¹Ù²Ù±â
+                // Audio ½ÇÆĞ »ç¿îµå Ãâ·Â
+                // ½ÇÆĞ ¸Ş¼¼Áö Ãâ·Â
             }
 
-            // ë‘ ì¹´ë“œë¥¼ ëª¨ë‘ ë‹¤ì‹œ ë’¤ì§‘ì–´ ì›ìƒíƒœë¡œ ë³µêµ¬ 
+            // µÎ Ä«µå¸¦ ¸ğµÎ ´Ù½Ã µÚÁı¾î ¿ø»óÅÂ·Î º¹±¸ 
 
-            // ì—¬ê¸°ê¹Œì§€ì™”ë‹¤ë©´ ë‘ì¹´ë“œë¥¼ ì„ íƒí•´ì„œ Matchë¥¼ ì‹œë„í–ˆê¸° ë•Œë¬¸ì— selecTime ì´ˆê¸°í™”
+            // ¿©±â±îÁö¿Ô´Ù¸é µÎÄ«µå¸¦ ¼±ÅÃÇØ¼­ Match¸¦ ½ÃµµÇß±â ¶§¹®¿¡ selecTime ÃÊ±âÈ­
             selectTime = 5.0f;
         }
 
@@ -130,21 +130,20 @@ namespace KKS
             {
 
                 GameObject newcard = Instantiate(card);
-                newcard.transform.parent = cardSlot.transform;
-                newcard.AddComponent<CardObject>();
+                newcard.GetComponent<CardObject>().data = new Card(cards[i].ToString());
 
+                /* newcard.transform.Find("front").GetComponent<SpriteRenderer>().sprite
+                     = Resources.Load<Sprite>("Resources/Images/" + cards[i].ToString());*/
+
+                newcard.transform.parent = cardSlot.transform;
                 float endX = cardSlot.transform.position.x + i % 4 * 1.2f;
                 float endY = cardSlot.transform.position.y + i / 4 * 1.2f;
                 Vector3 endPos = new Vector3(endX, endY, 0);
 
-               /* newcard.transform.Find("front").GetComponent<SpriteRenderer>().sprite
-                    = Resources.Load<Sprite>("Resources/Images/" + cards[i].ToString());*/
-
-                newcard.GetComponent<CardObject>().data = new Card(cards[i].ToString());
 
 
-                // UI ì›€ì§ì„ ì¹´ë“œíš¨ê³¼ í˜¸ì¶œ
-                // ì¹´ë“œ íš¨ê³¼ì— ë”°ë¼ì„œ startPosì„ ì •í•˜ê³  íš¨ê³¼ê°€ ëë‚˜ë©´ endPosì— ë„ë‹¬
+                // UI ¿òÁ÷ÀÓ Ä«µåÈ¿°ú È£Ãâ
+                // Ä«µå È¿°ú¿¡ µû¶ó¼­ startPosÀ» Á¤ÇÏ°í È¿°ú°¡ ³¡³ª¸é endPos¿¡ µµ´Ş
 
                 newcard.transform.position = endPos;
             }
@@ -155,7 +154,7 @@ namespace KKS
             timeLimit -= Time.deltaTime;
             if (timeLimit < 10)
             {
-                // Audio ê¸´ë°•í•œ ë°°ê²½ìŒìœ¼ë¡œ ë°°ê²½ìŒì„ ë³€ê²½
+                // Audio ±ä¹ÚÇÑ ¹è°æÀ½À¸·Î ¹è°æÀ½À» º¯°æ
             }
         }
 
