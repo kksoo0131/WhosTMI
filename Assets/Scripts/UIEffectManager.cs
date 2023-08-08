@@ -42,8 +42,8 @@ public class UIEffectManager : MonoBehaviour
         {
             mEffectObject = _object;
             mType = _type;
-            if (_start != null) mStart = _start;
-            if (_end != null) mEnd = _end;
+            if (_start != null) mStart = _start.Value;
+            if (_end != null) mEnd = _end.Value;
             effectClass = Activator.CreateInstance(types[(int)_type]);
         }
         public EffectData(GameObject _object, UIType _type, Vector3? _position)
@@ -70,7 +70,6 @@ public class UIEffectManager : MonoBehaviour
         if (_type > UIType.Flip) { throw new System.Exception("Unknown UI Effect"); }
         if (_type > UIType.MoveCenter) { return false; }
         // if (_start == null || _end == null) { return false; }
-
         mEffectList.Add(new EffectData(_object, _type, _start, _end));
         return true;
     }
@@ -114,12 +113,12 @@ public class UIEffectManager : MonoBehaviour
         {
             if (data.Type <= UIType.MoveCenter)
             {
-                var effect = data as MoveEffectInterface;
+                var effect = data.effectClass as MoveEffectInterface;
                 effect.Run(data.Object, data.Start, data.End);
             }
             else
             {
-                var effect = data as FixedEffectInterface;
+                var effect = data.effectClass as FixedEffectInterface;
                 effect.Run(data.Object, data.Position);
             }
         }

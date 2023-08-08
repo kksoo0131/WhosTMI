@@ -16,8 +16,8 @@ public class Spiral : MoveEffectInterface
     {
         ++Count;
         mIsRun = false;
-        mAngleSpeed = 0.1f;
-        mSpeed = 1.0f;
+        mAngleSpeed = 0.01f;
+        mSpeed = 0.01f;
     }
     ~Spiral()
     {
@@ -33,12 +33,14 @@ public class Spiral : MoveEffectInterface
             mEnd = _end;
             mDir = (Vector2)(mEnd - mStart);
             mDir.Normalize();
+            Debug.Log("Spiral Start");
+            _object.transform.position = _start.Value;
         }
         mTarget.transform.position = CalculatePosition(mTarget.transform.position);
 
-        if (mIsRun)
+        if (mIsRun == false)
         {
-            Cancel();
+            Debug.Log("Spiral Done");
             return false;
         }
         return true;
@@ -48,6 +50,7 @@ public class Spiral : MoveEffectInterface
     {
         if (mEnd != null)
         {
+            Debug.Log("Spiral Cancel");
             mTarget.transform.position = (Vector3)mEnd;
             mIsRun = false;
         }
