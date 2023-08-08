@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -11,6 +12,7 @@ public class UIEffectManager : MonoBehaviour
         MoveWave, MoveSpiral, MoveCenter, PopupStar, PopupSkull, PopupName, ReduceTime, ChangeColor, Flip
     }
 
+    //Type[] types = 
 
     private class EffectData
     {
@@ -38,7 +40,7 @@ public class UIEffectManager : MonoBehaviour
             mEffectObject = _object;
             mType = _type;
             if (_position != null) mPosition = _position;
-
+            
         }
     }
     private List<EffectData> mEffectList;
