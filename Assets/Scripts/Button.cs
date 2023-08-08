@@ -11,6 +11,10 @@ public class Button : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
+    public void ReadyBtn()
+    {
+        SceneManager.LoadScene("LevelScene");
+    }
     public void EndBtn()
     {
         #if UNITY_EDITOR
@@ -21,9 +25,8 @@ public class Button : MonoBehaviour
     }
 
     public void SelectCard()
-    {
-        
-        GameManager.Instance.SelectCard(gameObject);
+    { 
+        GameManager.Instance.SelectCard(gameObject.GetComponent<CardObject>());
     }
     
 }
