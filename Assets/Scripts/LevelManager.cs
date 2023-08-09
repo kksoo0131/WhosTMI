@@ -11,7 +11,6 @@ public class LevelManager : MonoBehaviour
     public TMP_Text LevelText;
     public TMP_Text BestScoreText;
     public int Level { get; private set; }
-    private int MaxLevel=2;
     private void Awake()
     {
         if (instance == null)
@@ -22,23 +21,42 @@ public class LevelManager : MonoBehaviour
         }
         else
             Destroy(this);
-        // Best Score를 검사해서 MaxLevel를 결정
+    }
+
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey("stage" + 1 + "Score"))
+        {
+            float bestScore = PlayerPrefs.GetFloat("stage" + 1 + "Score");
+            BestScoreText.text = bestScore.ToString("F2");
+        }
+        else
+            BestScoreText.text = "0.00";
     }
 
     public void LevelUp()
     {
-        SetLevel(Math.Clamp(Level + 1, 1, MaxLevel));
-        LevelText.text = Level.ToString();
-        //BestScoreText.text = Level.ToString() + ".00";
-        // 난이도에 따른 베스트 스코어 표현하기
+        if(PlayerPrefs.HasKey("stage" + (Level+1).ToString() + "Score"))
+        {
+            float bestScore = PlayerPrefs.GetFloat("stage" + (Level + 1).ToString() + "Score");
+            SetLevel(Level + 1);
+            BestScoreText.text = bestScore.ToString();
+        }
+        else if (PlayerPrefs.HasKey("stage" + Level.ToString() + "Score"))
+        {
+            SetLevel(Level + 1);
+            BestScoreText.text = "0.00";
+        }
     }
 
     public void LevelDown()
     {
-        SetLevel(Math.Clamp(Level - 1, 1, MaxLevel));
-        LevelText.text = Level.ToString();
-        //BestScoreText.text = Level.ToString() + ".00";
-        // 난이도에 따른 베스트 스코어 표현하기
+        if (Level > 1 && PlayerPrefs.HasKey("stage" + (Level - 1).ToString() + "Score"))
+        {
+            float bestScore = PlayerPrefs.GetFloat("stage" + (Level - 1).ToString() + "Score");
+            SetLevel(Level - 1);
+            BestScoreText.text = bestScore.ToString("F2");
+        }
     }
 
     private void SetLevel(int _level)

@@ -587,7 +587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ac26eab0013a545a265a6f1fa47f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelText: {fileID: 1680300560}
+  LevelText: {fileID: 1074595583}
+  BestScoreText: {fileID: 1922366666}
 --- !u!4 &1124022433
 Transform:
   m_ObjectHideFlags: 0
