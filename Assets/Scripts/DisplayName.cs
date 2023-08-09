@@ -25,6 +25,8 @@ public class DisplayName : MonoBehaviour, FixedEffectInterface
     //포지션을 입력받았다면 해당 위치로, 포지션을 입력받지 못 했다면 해당 오브젝트의 기본 위치로.
     public bool Run(GameObject _object, Vector3? _position)
     {
+        bool running = true; 
+
         //실행 중이 아니라면
         if (!isRun)
         {
@@ -65,9 +67,16 @@ public class DisplayName : MonoBehaviour, FixedEffectInterface
                 // mLastTime 동안 유지되고
                 // mAppearTime 동안 사라진다.
             }
+            if (mTime > mAppearTime + mLastTime + mAppearTime)
+            {
+                Debug.Log("PopSkull Done");
+                GameObject.Destroy(dn);
+                dn = null;
+                running = false;
+            }
         }
         
-        return true;
+        return running;
     }
 
     private void Fade(SpriteRenderer _item, float _delta)
