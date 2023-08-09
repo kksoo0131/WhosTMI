@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class ChangeColor : FixedEffectInterface
 {
-    private bool isRun = false;
     private SpriteRenderer spriteRenderer;
     private GameObject thisObject;
-    //Vector3 position;
-
-    //받아온 객체의 색을 회색으로 변경
     public bool Run(GameObject _object, Vector3? _position)
     {
         thisObject = _object;

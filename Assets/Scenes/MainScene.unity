@@ -292,6 +292,7 @@ MonoBehaviour:
   recordUI: {fileID: 319039422}
   tryUI: {fileID: 482680034}
   resultUI: {fileID: 1333308895}
+  UI: {fileID: 0}
 --- !u!4 &209835276
 Transform:
   m_ObjectHideFlags: 0

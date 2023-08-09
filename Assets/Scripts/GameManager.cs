@@ -20,6 +20,7 @@ namespace KKS
         public GameObject recordUI;
         public GameObject tryUI;
         public GameObject resultUI;
+        public GameObject UI;
 
         float timeLimit;
         int stageLevel;
@@ -58,6 +59,7 @@ namespace KKS
         void GameInit(int _stage)
         {
             AudioManager.instance.PlayMusic(AudioManager.MusicType.backGroundMusic1);
+            AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic2);
             stageLevel = _stage;
             tryNum = 0;
             selectTime = 3.0f;
@@ -67,6 +69,8 @@ namespace KKS
             recordUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bestTime.ToString("f2");
 
             Time.timeScale = 1.0f;
+
+            
         }
 
         public void SelectCard(CardObject _card)
@@ -113,8 +117,7 @@ namespace KKS
         }
         void MatchSuccessInvoke()
         {
-            UIEffectManager.instance.StartEffect(selectedCard1.gameObject, UIEffectManager.UIType.PopupName, new Vector3(0, 0, 0));
-            UIEffectManager.instance.StartEffect(selectedCard2.gameObject, UIEffectManager.UIType.PopupName, new Vector3(0, 0, 0));
+            UIEffectManager.instance.StartEffect(selectedCard1.gameObject, UIEffectManager.UIType.PopupName, new Vector3(0, 0, 0), new Vector3(0, 0, 0));
             UIEffectManager.instance.StartEffect(selectedCard1.gameObject, UIEffectManager.UIType.PopupStar, new Vector3(0, 0, 0), selectedCard1.transform.position);
             UIEffectManager.instance.StartEffect(selectedCard2.gameObject, UIEffectManager.UIType.PopupStar, new Vector3(0, 0, 0), selectedCard1.transform.position);
             AudioManager.instance.PlayMusic(AudioManager.MusicType.Success);
@@ -123,10 +126,9 @@ namespace KKS
 
             selectedCard1 = null;
             selectedCard2 = null;
-            
-
-
+    
         }
+
         void MatchFailInvoke()
         {
             timeLimit -= 1.0f;
@@ -187,7 +189,7 @@ namespace KKS
                 newcard.GetComponent<CardObject>().data = new Card(cards[i].ToString());
 
                 newcard.transform.Find("front").GetComponent<SpriteRenderer>().sprite
-                     = Resources.Load<Sprite>("Images/rtan" + cards[i].ToString());
+                     = Resources.Load<Sprite>("Images/" + cards[i].ToString());
 
                 newcard.transform.parent = cardSlot.transform;
                 float endX;
@@ -236,6 +238,12 @@ namespace KKS
                     case 2:
                         UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveSpiral, new Vector3(0, 0, 0), endPos);
                         break;
+                    case 3:
+                        UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveWave, new Vector3(0, 0, 0), endPos);
+                        break;
+                    case 4:
+                        UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveSpiral, new Vector3(0, 0, 0), endPos);
+                        break;
                 }
             }
         }
@@ -278,11 +286,12 @@ namespace KKS
 
         void StageClear()
         {
-            AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
-            AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic2);
+            
 
             if (cardNum == 0)
             {
+                AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
+                AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic2);
                 string stageKey = "stage" + stageLevel.ToString() + "Score";
                 Time.timeScale = 0.0f;
 
@@ -299,6 +308,7 @@ namespace KKS
 
             if (stageLevel > 4)
             {
+
                 GameEnd();
                 return;
             }
@@ -306,6 +316,8 @@ namespace KKS
 
         void GameEnd()
         {
+            AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
+            AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic2);
             Time.timeScale = 0.0f;
             resultUI.SetActive(true);
             resultUI.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = timeLimit.ToString("f2");

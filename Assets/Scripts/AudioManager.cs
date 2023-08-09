@@ -41,18 +41,6 @@ public class AudioManager : MonoBehaviour
         Fail
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public bool PlayMusic(MusicType musicType)
     {
         if (musicType == MusicType.Fail)
