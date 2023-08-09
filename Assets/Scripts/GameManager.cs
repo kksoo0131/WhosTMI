@@ -45,7 +45,7 @@ namespace KKS
 
         private void Start()
         {
-            GameInit(1); 
+            GameInit(LevelManager.instance.Level); 
         }
 
         // Update is called once per frame
@@ -92,10 +92,10 @@ namespace KKS
 
             AudioManager.instance.PlayMusic(AudioManager.MusicType.Flip);
             UIEffectManager.instance.StartEffect(_card.gameObject, UIEffectManager.UIType.Flip, new Vector3(0, 0, 0), _card.transform.position);
-            _card.OpenCard();
-            
 
+            _card.OpenCard();
         }
+        
         void CardMatch()
         {
             tryNum++;
