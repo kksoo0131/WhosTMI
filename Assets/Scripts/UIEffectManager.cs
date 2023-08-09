@@ -16,10 +16,10 @@ public class UIEffectManager : MonoBehaviour
         //MoveCenter,
         PopupStar,
         PopupSkull,
-        //PopupName,
+        PopupName,
         ReduceTime,
         //ChangeColor,
-        //Flip
+        Flip
     }
 
     private class EffectData
@@ -31,7 +31,7 @@ public class UIEffectManager : MonoBehaviour
             // typeof(Center),
             typeof(PopStar),
             typeof(PopSkull),
-            // typeof(PopName),
+            typeof(DisplayName),
             typeof(TimeDecayEffect),
             // typeof(ChangeColor),
             typeof(Flip),
