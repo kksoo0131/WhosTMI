@@ -11,8 +11,8 @@ public class PopSkull : FixedEffectInterface
     private GameObject mSkull;
     private float mTime;
     private SpriteRenderer[] mSpriteRenderer;
-    private float mAppearTime = 0.2f;
-    private float mLastTime = 0.5f;
+    private float mAppearTime = 0.5f;
+    private float mLastTime = 0.2f;
 
     public PopSkull()
     {
@@ -33,7 +33,6 @@ public class PopSkull : FixedEffectInterface
         if (mIsRun == false)
         {
             if (mSkullPrefab == null) { return false; }
-            Debug.Log("PopSkull Start");
             mSkull = GameObject.Instantiate(mSkullPrefab);
 
             if (_position != null)
@@ -59,16 +58,15 @@ public class PopSkull : FixedEffectInterface
             foreach (var item in mSpriteRenderer)
             {
                 if (mTime <= mAppearTime)
-                    Fade(item, mTime*2f); // Fadein
+                    SetAlpha(item, mTime / mAppearTime); // Fadein
                 else if (mTime >= mAppearTime + mLastTime)
-                    Fade(item, (mAppearTime + mLastTime + mAppearTime) - (mTime * 2f)); // Fadeout
+                    SetAlpha(item, ((mAppearTime + mLastTime + mAppearTime) - (mTime)) / (mAppearTime)); // Fadeout
                 // mAppearTime 동안 나타나고
                 // mLastTime 동안 유지되고
                 // mAppearTime 동안 사라진다.
             }
             if (mTime > mAppearTime + mLastTime + mAppearTime)
             {
-                Debug.Log("PopSkull Done");
                 GameObject.Destroy(mSkull);
                 mSkull = null;
                 ret = false;
@@ -81,22 +79,21 @@ public class PopSkull : FixedEffectInterface
     /// delta만큼 item의 alpha값을 변화시킨다.
     /// </summary>
     /// <param name="_item">오브젝트의 스프라이트 랜더러</param>
-    /// <param name="_delta">알파 변화값</param>
-    private void Fade(SpriteRenderer _item, float _delta)
+    /// <param name="_alpha">알파값</param>
+    private void SetAlpha(SpriteRenderer _item, float _alpha)
     {
         Color tmp = _item.color;
-        tmp.a = Math.Clamp(tmp.a + _delta, 0f, 1f);
+        tmp.a = Math.Clamp(_alpha, 0f, 1f);
         _item.color = tmp;
     }
 
     public void Cancel()
     {
-        if (mSkull != null) 
+        if (mSkull != null)
         {
             GameObject.Destroy(mSkull);
             mSkull = null;
         }
-        Debug.Log("PopSkull Cancel");
     }
 
     public bool IsEnd()

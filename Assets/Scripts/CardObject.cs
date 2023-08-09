@@ -16,18 +16,23 @@ public class CardObject : MonoBehaviour
 
     public void OpenCard()
     {
+        Invoke("OpenCardInvoke", 0.3f); 
+    }
+
+    void OpenCardInvoke()
+    {
         transform.Find("front").gameObject.SetActive(true);
         transform.Find("back").gameObject.SetActive(false);
     }
 
     public void CloseCard()
     {
-        Invoke("CloseCardInvoke", 1.0f);
+        Invoke("CloseCardInvoke", 0.5f);
     }
 
     public void DestroyCard()
     {
-        Invoke("DestroyCardInvoke", 1.0f);
+        Invoke("DestroyCardInvoke", 0.5f);
     }
 
     void CloseCardInvoke()

@@ -13,12 +13,12 @@ public class UIEffectManager : MonoBehaviour
     {
         MoveWave,
         MoveSpiral,
-        MoveCenter,
+        //MoveCenter,
         PopupStar,
         PopupSkull,
         PopupName,
         ReduceTime,
-        ChangeColor,
+        //ChangeColor,
         Flip
     }
 
@@ -31,10 +31,10 @@ public class UIEffectManager : MonoBehaviour
             // typeof(Center),
             typeof(PopStar),
             typeof(PopSkull),
-            // typeof(PopName),
+            typeof(DisplayName),
             typeof(TimeDecayEffect),
             // typeof(ChangeColor),
-            // typeof(Flip)
+            typeof(Flip),
             };
         GameObject mEffectObject;
         UIType mType;
@@ -76,7 +76,7 @@ public class UIEffectManager : MonoBehaviour
     public bool StartEffect(GameObject _object, UIType _type, Vector3? _start, Vector3? _end)
     {
         if (_object == null) { throw new System.Exception("null GameObject"); }
-        if (_type > UIType.Flip) { throw new System.Exception("Unknown UI Effect"); }
+        if (((int)_type) > Enum.GetValues(typeof(UIType)).Length) { throw new System.Exception("Unknown UI Effect"); }
         //if (_type > UIType.MoveCenter) { return false; }
         // if (_start == null || _end == null) { return false; }
         mEffectList.Add(new EffectData(_object, _type, _start, _end));
@@ -93,7 +93,7 @@ public class UIEffectManager : MonoBehaviour
     public bool StartEffect(GameObject _object, UIType _type, Vector3? _position)
     {
         if (_object == null) { throw new System.Exception("null GameObject"); }
-        if (_type > UIType.Flip) { throw new System.Exception("Unknown UI Effect"); }
+        if (((int)_type) > Enum.GetValues(typeof(UIType)).Length) { throw new System.Exception("Unknown UI Effect"); }
         //if (_type < UIType.PopupStar) { return false; }
         // if (_position == null) { return false; }
 
@@ -126,7 +126,7 @@ public class UIEffectManager : MonoBehaviour
         int i = 0;
         foreach (EffectData data in mEffectList)
         {
-            if (data.Type <= UIType.MoveCenter)
+            if (data.Type <= UIType.MoveSpiral)
             {
                 var effect = data.effectClass as MoveEffectInterface;
                 var run = effect.Run(data.Object, data.Start, data.End);

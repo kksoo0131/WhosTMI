@@ -19,14 +19,14 @@ public class AudioManager : MonoBehaviour
         }
         audioSources[(int)MusicType.backGroundMusic1].clip = backGroundMusic1;
         audioSources[(int)MusicType.backGroundMusic2].clip = backGroundMusic2;
-        audioSources[(int)MusicType.Filp].clip = Filp;
+        audioSources[(int)MusicType.Flip].clip = Flip;
         audioSources[(int)MusicType.Success].clip = Success;
         audioSources[(int)MusicType.Fail].clip = Fail;
     }
 
     public AudioClip backGroundMusic1,
         backGroundMusic2,
-        Filp,
+        Flip,
         Success,
         Fail;
 
@@ -36,7 +36,7 @@ public class AudioManager : MonoBehaviour
     {
         backGroundMusic1,
         backGroundMusic2,
-        Filp,
+        Flip,
         Success,
         Fail
     }
@@ -65,9 +65,9 @@ public class AudioManager : MonoBehaviour
             audioSources[(int)musicType].PlayOneShot(Success);
             return true;
         }
-        else if (musicType == MusicType.Filp)
+        else if (musicType == MusicType.Flip)
         {
-            audioSources[(int)musicType].PlayOneShot(Filp);
+            audioSources[(int)musicType].PlayOneShot(Flip);
             return true;
         }
         else
