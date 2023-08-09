@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager instance;
+    public static LevelManager instance = null;
     public TMP_Text LevelText;
     public TMP_Text BestScoreText;
     public int Level { get; private set; }
@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
         {
             instance = this;
             Level = 1;
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
         }
         else
             Destroy(this);
