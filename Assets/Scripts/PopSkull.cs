@@ -11,8 +11,8 @@ public class PopSkull : FixedEffectInterface
     private GameObject mSkull;
     private float mTime;
     private SpriteRenderer[] mSpriteRenderer;
-    private float mAppearTime = 0.5f;
-    private float mLastTime = 1f;
+    private float mAppearTime = 0.2f;
+    private float mLastTime = 0.5f;
 
     public PopSkull()
     {
@@ -29,26 +29,33 @@ public class PopSkull : FixedEffectInterface
     /// <returns></returns>
     public bool Run(GameObject _object, Vector3? _position)
     {
-        bool ret = false;
+        bool ret = true;
         if (mIsRun == false)
         {
-            Debug.Log("PopSkull Start");
             if (mSkullPrefab == null) { return false; }
+            Debug.Log("PopSkull Start");
             mSkull = GameObject.Instantiate(mSkullPrefab);
+
             if (_position != null)
                 mSkull.transform.position = _position.Value;
             else
                 mSkull.transform.position = _object.transform.position;
+
             mSpriteRenderer = mSkull.transform.GetComponentsInChildren<SpriteRenderer>();
+
             foreach (var item in mSpriteRenderer)
             {
                 Color tmp = item.color;
                 tmp.a = 0f;
                 item.color = tmp;
             }
+
+            mIsRun = true;
         }
         else
         {
+            mTime += Time.deltaTime;
+
             foreach (var item in mSpriteRenderer)
             {
                 if (mTime <= mAppearTime)
@@ -67,8 +74,6 @@ public class PopSkull : FixedEffectInterface
                 ret = false;
             }
         }
-        mIsRun = true;
-        mTime += Time.deltaTime;
         return ret;
     }
 
