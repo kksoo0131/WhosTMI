@@ -33,7 +33,7 @@ public class Flip : FixedEffectInterface
         }
         else
         {
-            filpAnime.Play("unfilp");
+            //filpAnime.Play("unfilp");
         }
     }
 
