@@ -102,11 +102,12 @@ public class UIEffectManager : MonoBehaviour
             instance = this;
             mEffectList = new List<EffectData>();
         }
+        mEffectList.Clear();
     }
     // Start is called before the first frame update
     void Start()
     {
-        mEffectList.Clear();
+        
     }
 
     // Update is called once per frame
