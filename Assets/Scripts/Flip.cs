@@ -2,22 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Flip : FixedEffectInterface
 {
     private Animator filpAnime;
-    //Vector3 position;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    public bool Run(GameObject _object, Vector3 _position)
+    public bool Run(GameObject _object, Vector3? _position)
     {
         //애니메이션의 대상이 될 게임오브젝트 지정
         filpAnime = _object.transform.GetComponent<Animator>();
@@ -27,7 +15,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     public void Cancel()
     {
-        if (gameObject == null)
+        if (filpAnime == null)
         {
             throw new System.Exception("GameObject Dosen't Exist!!!");
         }
@@ -35,6 +23,11 @@ public class NewBehaviourScript : MonoBehaviour
         {
             //filpAnime.Play("unfilp");
         }
+    }
+
+    public bool IsEnd()
+    {
+        throw new System.NotImplementedException();
     }
 }
 
