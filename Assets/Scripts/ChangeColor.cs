@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeColor : MonoBehaviour
+public class ChangeColor : FixedEffectInterface
 {
     private bool isRun = false;
     private SpriteRenderer spriteRenderer;
@@ -18,7 +18,6 @@ public class ChangeColor : MonoBehaviour
 
         spriteRenderer = thisObject.GetComponent<SpriteRenderer>();
         spriteRenderer.material.color = Color.gray;
-        Debug.Log("Color Changed!");
 
         return false;
     }
@@ -36,7 +35,6 @@ public class ChangeColor : MonoBehaviour
             spriteRenderer.material.color = Color.white;
         }
 
-        Debug.Log("ChangeColor Canceled!");
     }
 
     public bool IsEnd()
