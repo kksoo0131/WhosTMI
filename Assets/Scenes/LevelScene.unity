@@ -589,6 +589,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelText: {fileID: 1680300560}
   BestScoreText: {fileID: 1922366666}
+  UP: {fileID: 1580969029}
+  DOWN: {fileID: 1151692771}
 --- !u!4 &1124022433
 Transform:
   m_ObjectHideFlags: 0
