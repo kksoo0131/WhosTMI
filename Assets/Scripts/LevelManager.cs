@@ -61,6 +61,7 @@ public class LevelManager : MonoBehaviour
 
     private void SetLevel(int _level)
     {
+        LevelText.text = _level.ToString();
         Level = _level;
     }
 }
