@@ -11,23 +11,7 @@ namespace KKS
     public class GameManager : MonoBehaviour
     {
         static GameManager instance;
-        public static GameManager Instance { get { Init(); return instance; } }
-
-        static void Init()
-        {
-            if (instance == null)
-            {
-                GameObject go = GameObject.Find("GameManager");
-                if (go == null)
-                {
-                    go = new GameObject("GameManager");
-                    go.AddComponent<GameManager>();
-                }
-                instance = go.GetComponent<GameManager>();
-            }
-
-        }
-
+        public static GameManager Instance { get { return instance; } }
 
         public int cardNum;
         public bool isMatching = false;
@@ -49,26 +33,12 @@ namespace KKS
         CardObject selectedCard1;
         CardObject selectedCard2;
 
-        void GameInit(int _stage)
-        {
-            /*AudioManager.audioManager.CancelMusic(AudioManager.MusicType.backGroundMusic2);
-            AudioManager.audioManager.PlayMusic(AudioManager.MusicType.backGroundMusic1);*/
-            stageLevel = _stage;
-            timeLimit = 60.0f - (_stage -1) * 20.0f;
-            tryNum = 0;
-            selectTime = 5.0f;
-            Time.timeScale = 1.0f;
-            CardShuffle();
-            bestTime = PlayerPrefs.GetFloat(stageLevel.ToString());
-            recordUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bestTime.ToString("f2");
-            // 1스테이지 8개 3/2/3
-            // 2스테이지 16개  4 x 4
-
-        }
-
         void Awake()
         {
-            Init();
+            if (instance == null)
+            {
+                instance = this;
+            }
             cardSlot = GameObject.Find("cardSlot");
             card = (GameObject)Resources.Load("Prefabs/card");
         }
@@ -83,6 +53,23 @@ namespace KKS
         {
                 TimerEffect();
                 StageClear();
+        }
+
+        void GameInit(int _stage)
+        {
+            AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic2);
+            AudioManager.instance.PlayMusic(AudioManager.MusicType.backGroundMusic1);
+            stageLevel = _stage;
+            timeLimit = 60.0f - (_stage - 1) * 20.0f;
+            tryNum = 0;
+            selectTime = 5.0f;
+            Time.timeScale = 1.0f;
+            CardShuffle();
+            bestTime = PlayerPrefs.GetFloat(stageLevel.ToString());
+            recordUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bestTime.ToString("f2");
+            // 1스테이지 8개 3/2/3
+            // 2스테이지 16개  4 x 4
+
         }
 
         public void SelectCard(CardObject _card)
@@ -102,9 +89,8 @@ namespace KKS
                 selectTime = 5.0f;
                 CardMatch();
             }
-       
-            // 카드 뒤집기
-            /*AudioManager.audioManager.PlayMusic(AudioManager.MusicType.Filp);*/
+
+            AudioManager.instance.PlayMusic(AudioManager.MusicType.Filp);
             _card.OpenCard();
             
 
@@ -118,7 +104,7 @@ namespace KKS
             {
                 // UI 별 출력
                 // UI 해당 TMI의 이름 출력
-                /*AudioManager.audioManager.PlayMusic(AudioManager.MusicType.Success);*/
+                AudioManager.instance.PlayMusic(AudioManager.MusicType.Success);
                 selectedCard1.DestroyCard();
                 selectedCard2.DestroyCard();
             }
@@ -129,7 +115,7 @@ namespace KKS
                 // UI 시간 감소 효과 호출 : UI를 통해서 txt수정?
                 // UI 해골 출력
                 // UI 색 바꾸기
-                /*AudioManager.audioManager.PlayMusic(AudioManager.MusicType.Fail);*/
+                AudioManager.instance.PlayMusic(AudioManager.MusicType.Fail);
                 // 실패 메세지 출력
                 selectedCard1.CloseCard();
                 selectedCard2.CloseCard();
@@ -193,23 +179,33 @@ namespace KKS
                 }
                 else
                 {
-                    endX = cardSlot.transform.position.x + i % 4 * 1.4f;
-                    endY = cardSlot.transform.position.y + i / 4 * 1.4f;
+                    endX = cardSlot.transform.position.x -0.3f +i % 4 * 1.4f;
+                    endY = cardSlot.transform.position.y -0.3f + i / 4 * 1.4f;
                 }
 
-                Vector3 endPos = new Vector3(endX, endY, 0);
+                Vector3 endPos = new Vector3(endX, endY, 0); // 카드가 최종적으로 도착할 위치
 
-                // 카드의 갯수에따라서 카드의 배치가 달라지므로
-                // 카드의 position도 그에따라 변경되어야함.
-
-
-
-                // UI 움직임 카드효과 호출
+                //UI 움직임 카드효과 호출
                 // 카드 효과에 따라서 startPos을 정하고 효과가 끝나면 endPos에 도달
 
-                UIEffectManager.instance.StartEffect(newcard, (UIEffectManager.UIType)0, new Vector3(0, 0, 0), endPos);
-                //UIEffectManager.instance.StartEffect(newcard, (UIEffectManager.UIType)1, new Vector3(0, 0, 0), endPos);
+                MakeCardEffect(newcard, endPos);
+
+
+
             }
+        }
+        
+        void MakeCardEffect(GameObject _object,Vector3 endPos )
+        {
+            switch (stageLevel)
+            {
+                case 1:
+                    UIEffectManager.instance.StartEffect(_object, (UIEffectManager.UIType)0, new Vector3(0, 0, 0), endPos);
+                    break;
+                case 2:
+                    UIEffectManager.instance.StartEffect(_object, (UIEffectManager.UIType)1, new Vector3(0, 0, 0), endPos);
+                    break;
+            }        
         }
 
         void TimerEffect()
@@ -220,10 +216,9 @@ namespace KKS
 
             if (timeLimit < 10)
             {
-                /*AudioManager.audioManager.CancelMusic(AudioManager.MusicType.backGroundMusic1);
-                AudioManager.audioManager.PlayMusic(AudioManager.MusicType.backGroundMusic2);*/
-
-                // UI 시간 감소 강조 효과
+                AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
+                AudioManager.instance.PlayMusic(AudioManager.MusicType.backGroundMusic2);
+                UIEffectManager.instance.StartEffect(recordUI.transform.GetChild(0).gameObject, (UIEffectManager.UIType)4, recordUI.transform.GetChild(0).transform.position);
                 // timeLimit Image를 setTrue로 변경
             }
             else if (timeLimit < 0)
@@ -248,6 +243,9 @@ namespace KKS
 
         void StageClear()
         {
+            AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
+            AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic2);
+
             if (stageLevel > 2)
             {
                 GameEnd();

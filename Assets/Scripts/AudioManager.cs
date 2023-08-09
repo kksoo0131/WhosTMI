@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager audioManager;
+    public static AudioManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+
+    }
 
     public AudioClip backGroundMusic1,
         backGroundMusic2,
@@ -12,7 +21,7 @@ public class AudioManager : MonoBehaviour
         Success,
         Fail;
 
-    AudioSource[] audioSources = new AudioSource[5];//MusicType ÀÇ Å©±â
+    public AudioSource[] audioSources = new AudioSource[5];//MusicType ÀÇ Å©±â
 
     public enum MusicType
     {
@@ -26,6 +35,10 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < audioSources.Length; i++)
+        {
+            audioSources[i] = gameObject.AddComponent<AudioSource>();
+        }
         audioSources[(int)MusicType.backGroundMusic1].clip = backGroundMusic1;
         audioSources[(int)MusicType.backGroundMusic2].clip = backGroundMusic2;
         audioSources[(int)MusicType.Filp].clip = Filp;

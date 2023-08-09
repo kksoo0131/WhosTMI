@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class UIEffectManager : MonoBehaviour
 {
-    public static UIEffectManager instance;
+    static public UIEffectManager instance;
+
     public enum UIType
     {
         MoveWave, MoveSpiral, MoveCenter, PopupStar, PopupSkull, PopupName, ReduceTime, ChangeColor, Flip
@@ -23,7 +24,7 @@ public class UIEffectManager : MonoBehaviour
             typeof(PopStar),
             typeof(PopSkull),
             // typeof(PopName),
-            // typeof(ReduceTime),
+            typeof(TimeDecayEffect),
             // typeof(ChangeColor),
             // typeof(Flip)
             };

@@ -22,13 +22,13 @@ public class Wave : MoveEffectInterface
             mTarget = _object;
             mEnd = _end;
             
-            mMaxY = _end.Value.y + 0.03f;
-            mMinY = _end.Value.y - 0.03f;
+            mMaxY = _end.Value.y + 0.5f;
+            mMinY = _end.Value.y - 0.5f;
             mDir = true;
-            mSpeedX = 1.5f;
-            mSpeedY = 0.37f;
+            mSpeedX = 2f;
+            mSpeedY = 2f;
             mDuration = 3.0f;
-            mTarget.transform.position = new Vector3(_end.Value.x + (mSpeedX - 0.1f) * mDuration , _end.Value.y, 0);
+            mTarget.transform.position = new Vector3(_end.Value.x + (mSpeedX) * mDuration , _end.Value.y, 0);
         }
         mDuration -= Time.deltaTime;
 
