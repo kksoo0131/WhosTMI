@@ -52,6 +52,8 @@ public class DisplayName : MonoBehaviour, FixedEffectInterface
                 tmp.a = 0f;
                 item.color = tmp;
             }
+
+            isRun = true;
         }
         else
         {
@@ -69,8 +71,8 @@ public class DisplayName : MonoBehaviour, FixedEffectInterface
             }
             if (mTime > mAppearTime + mLastTime + mAppearTime)
             {
-                Debug.Log("PopSkull Done");
                 GameObject.Destroy(dn);
+                Debug.Log("DisplayName End");
                 dn = null;
                 running = false;
             }
