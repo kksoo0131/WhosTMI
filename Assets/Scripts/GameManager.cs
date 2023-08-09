@@ -91,7 +91,7 @@ namespace KKS
             }
 
             AudioManager.instance.PlayMusic(AudioManager.MusicType.Flip);
-            UIEffectManager.instance.StartEffect(_card.gameObject, (UIEffectManager.UIType)5, new Vector3(0, 0, 0), _card.transform.position);
+            UIEffectManager.instance.StartEffect(_card.gameObject, UIEffectManager.UIType.Flip, new Vector3(0, 0, 0), _card.transform.position);
             _card.OpenCard();
             
 
@@ -117,9 +117,10 @@ namespace KKS
         }
         void MatchSuccessInvoke()
         {
-            // UI 해당 TMI의 이름 출력
-            UIEffectManager.instance.StartEffect(selectedCard1.gameObject, (UIEffectManager.UIType)2, new Vector3(0, 0, 0), selectedCard1.transform.position);
-            UIEffectManager.instance.StartEffect(selectedCard2.gameObject, (UIEffectManager.UIType)2, new Vector3(0, 0, 0), selectedCard1.transform.position);
+            UIEffectManager.instance.StartEffect(selectedCard1.gameObject, UIEffectManager.UIType.PopupName, new Vector3(0, 0, 0));
+            UIEffectManager.instance.StartEffect(selectedCard2.gameObject, UIEffectManager.UIType.PopupName, new Vector3(0, 0, 0));
+            UIEffectManager.instance.StartEffect(selectedCard1.gameObject, UIEffectManager.UIType.PopupStar, new Vector3(0, 0, 0), selectedCard1.transform.position);
+            UIEffectManager.instance.StartEffect(selectedCard2.gameObject, UIEffectManager.UIType.PopupStar, new Vector3(0, 0, 0), selectedCard1.transform.position);
             AudioManager.instance.PlayMusic(AudioManager.MusicType.Success);
             selectedCard1.DestroyCard();
             selectedCard2.DestroyCard();
@@ -132,8 +133,8 @@ namespace KKS
             timeLimit -= 1.0f;
             // 실패 메세지 출력
             // UI 색 바꾸기
-            UIEffectManager.instance.StartEffect(selectedCard1.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
-            UIEffectManager.instance.StartEffect(selectedCard2.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
+            UIEffectManager.instance.StartEffect(selectedCard1.gameObject, UIEffectManager.UIType.PopupSkull, new Vector3(0, 0, 0), selectedCard1.transform.position);
+            UIEffectManager.instance.StartEffect(selectedCard2.gameObject, UIEffectManager.UIType.PopupSkull, new Vector3(0, 0, 0), selectedCard1.transform.position);
             AudioManager.instance.PlayMusic(AudioManager.MusicType.Fail);
             
             selectedCard1.CloseCard();
@@ -213,26 +214,18 @@ namespace KKS
 
                 //UI 움직임 카드효과 호출
                 // 카드 효과에 따라서 startPos을 정하고 효과가 끝나면 endPos에 도달
-
-                MakeCardEffect(newcard, endPos);
-
-
-
+                switch (stageLevel)
+                {
+                    case 1:
+                        UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveWave, new Vector3(0, 0, 0), endPos);
+                        break;
+                    case 2:
+                        UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveSpiral, new Vector3(0, 0, 0), endPos);
+                        break;
+                }
             }
         }
-        
-        void MakeCardEffect(GameObject _object,Vector3 endPos )
-        {
-            switch (stageLevel)
-            {
-                case 1:
-                    UIEffectManager.instance.StartEffect(_object, (UIEffectManager.UIType)0, new Vector3(0, 0, 0), endPos);
-                    break;
-                case 2:
-                    UIEffectManager.instance.StartEffect(_object, (UIEffectManager.UIType)1, new Vector3(0, 0, 0), endPos);
-                    break;
-            }        
-        }
+       
 
         void TimerEffect()
         {
@@ -250,7 +243,7 @@ namespace KKS
                 }
                 AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
                 AudioManager.instance.PlayMusic(AudioManager.MusicType.backGroundMusic2);
-                UIEffectManager.instance.StartEffect(recordUI.transform.GetChild(0).gameObject, (UIEffectManager.UIType)4, recordUI.transform.GetChild(0).transform.position);
+                UIEffectManager.instance.StartEffect(recordUI.transform.GetChild(0).gameObject, (UIEffectManager.UIType)5, recordUI.transform.GetChild(0).transform.position);
             }
              
 
