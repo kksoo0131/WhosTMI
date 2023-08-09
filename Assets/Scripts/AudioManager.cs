@@ -13,6 +13,15 @@ public class AudioManager : MonoBehaviour
             instance = this;
         }
 
+        for (int i = 0; i < audioSources.Length; i++)
+        {
+            audioSources[i] = gameObject.AddComponent<AudioSource>();
+        }
+        audioSources[(int)MusicType.backGroundMusic1].clip = backGroundMusic1;
+        audioSources[(int)MusicType.backGroundMusic2].clip = backGroundMusic2;
+        audioSources[(int)MusicType.Filp].clip = Filp;
+        audioSources[(int)MusicType.Success].clip = Success;
+        audioSources[(int)MusicType.Fail].clip = Fail;
     }
 
     public AudioClip backGroundMusic1,
@@ -35,15 +44,7 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < audioSources.Length; i++)
-        {
-            audioSources[i] = gameObject.AddComponent<AudioSource>();
-        }
-        audioSources[(int)MusicType.backGroundMusic1].clip = backGroundMusic1;
-        audioSources[(int)MusicType.backGroundMusic2].clip = backGroundMusic2;
-        audioSources[(int)MusicType.Filp].clip = Filp;
-        audioSources[(int)MusicType.Success].clip = Success;
-        audioSources[(int)MusicType.Fail].clip = Fail;
+
     }
 
     // Update is called once per frame
