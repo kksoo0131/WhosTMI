@@ -57,19 +57,16 @@ namespace KKS
 
         void GameInit(int _stage)
         {
-            AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic2);
             AudioManager.instance.PlayMusic(AudioManager.MusicType.backGroundMusic1);
             stageLevel = _stage;
-            timeLimit = 60.0f - (_stage - 1) * 20.0f;
             tryNum = 0;
-            selectTime = 5.0f;
-            Time.timeScale = 1.0f;
+            selectTime = 3.0f;
             CardShuffle();
+            stageUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _stage.ToString();
             bestTime = PlayerPrefs.GetFloat("stage"+stageLevel.ToString()+ "Score");
             recordUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bestTime.ToString("f2");
-            // 1스테이지 8개 3/2/3
-            // 2스테이지 16개  4 x 4
 
+            Time.timeScale = 1.0f;
         }
 
         public void SelectCard(CardObject _card)
@@ -92,7 +89,6 @@ namespace KKS
 
             AudioManager.instance.PlayMusic(AudioManager.MusicType.Flip);
             UIEffectManager.instance.StartEffect(_card.gameObject, UIEffectManager.UIType.Flip, new Vector3(0, 0, 0), _card.transform.position);
-
             _card.OpenCard();
         }
         
@@ -124,8 +120,11 @@ namespace KKS
             AudioManager.instance.PlayMusic(AudioManager.MusicType.Success);
             selectedCard1.DestroyCard();
             selectedCard2.DestroyCard();
+
             selectedCard1 = null;
             selectedCard2 = null;
+            
+
 
         }
         void MatchFailInvoke()
@@ -136,7 +135,9 @@ namespace KKS
             UIEffectManager.instance.StartEffect(selectedCard1.gameObject, UIEffectManager.UIType.PopupSkull, new Vector3(0, 0, 0), selectedCard1.transform.position);
             UIEffectManager.instance.StartEffect(selectedCard2.gameObject, UIEffectManager.UIType.PopupSkull, new Vector3(0, 0, 0), selectedCard1.transform.position);
             AudioManager.instance.PlayMusic(AudioManager.MusicType.Fail);
-            
+
+            UIEffectManager.instance.StartEffect(selectedCard1.gameObject.transform.GetChild(1).gameObject, UIEffectManager.UIType.ChangeColor, new Vector3(0, 0, 0), selectedCard1.transform.position);
+            UIEffectManager.instance.StartEffect(selectedCard2.gameObject.transform.GetChild(1).gameObject, UIEffectManager.UIType.ChangeColor, new Vector3(0, 0, 0), selectedCard2.transform.position);
             selectedCard1.CloseCard();
             selectedCard2.CloseCard();
 
@@ -152,12 +153,19 @@ namespace KKS
             {
                 case 1:
                     cardNum = 8;
+                    timeLimit = 60.0f;
                     break;
                 case 2:
                     cardNum = 16;
+                    timeLimit = 60.0f;
                     break;
                 case 3:
-                    cardNum = 24;
+                    cardNum = 8;
+                    timeLimit = 30.0f;
+                    break;
+                case 4:
+                    cardNum = 16;
+                    timeLimit = 30.0f;
                     break;
                 default:
                     break;
@@ -185,7 +193,7 @@ namespace KKS
                 float endX;
                 float endY;
 
-                if (stageLevel == 1)
+                if (stageLevel == 1|| stageLevel == 3)
                 {
                     if (i < 3)
                     {
@@ -204,10 +212,16 @@ namespace KKS
                     }
                         
                 }
-                else
+                else if(stageLevel == 2 || stageLevel == 4)
                 {
                     endX = cardSlot.transform.position.x -0.3f +i % 4 * 1.4f;
                     endY = cardSlot.transform.position.y -0.3f + i / 4 * 1.4f;
+                }
+                else
+                {
+                    endX = 0;
+                    endY = 0;
+
                 }
 
                 Vector3 endPos = new Vector3(endX, endY, 0);
@@ -283,7 +297,7 @@ namespace KKS
                 // 현재 스테이지의 기록을 저장
             }
 
-            if (stageLevel > 2)
+            if (stageLevel > 4)
             {
                 GameEnd();
                 return;

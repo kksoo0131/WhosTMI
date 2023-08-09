@@ -18,7 +18,7 @@ public class UIEffectManager : MonoBehaviour
         PopupSkull,
         PopupName,
         ReduceTime,
-        //ChangeColor,
+        ChangeColor,
         Flip
     }
 
@@ -33,7 +33,7 @@ public class UIEffectManager : MonoBehaviour
             typeof(PopSkull),
             typeof(DisplayName),
             typeof(TimeDecayEffect),
-            // typeof(ChangeColor),
+            typeof(ChangeColor),
             typeof(Flip),
             };
         GameObject mEffectObject;
