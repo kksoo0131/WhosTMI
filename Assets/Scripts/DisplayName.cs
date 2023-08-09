@@ -54,7 +54,7 @@ public class DisplayName : FixedEffectInterface
                 item.color = tmp;
             }
             var txt = _object.GetComponent<CardObject>().data.Name;
-            dn.transform.GetChild(0).GetComponent<Text>().text = Convert.ToInt32(txt) < 4 ? "김광수" : Convert.ToInt32(txt) < 7 ? "채이환" : "조영오";
+            dn.transform.GetChild(0).GetComponent<Text>().text = Convert.ToInt32(txt) < 3 ? "김광수" : Convert.ToInt32(txt) < 6 ? "채이환" : "조영오";
             isRun = true;
         }
         else
