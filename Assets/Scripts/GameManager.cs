@@ -51,8 +51,8 @@ namespace KKS
         // Update is called once per frame
         void Update()
         {
-                TimerEffect();
-                StageClear();
+            TimerEffect();
+            StageClear();
         }
 
         void GameInit(int _stage)
@@ -65,7 +65,7 @@ namespace KKS
             selectTime = 5.0f;
             Time.timeScale = 1.0f;
             CardShuffle();
-            bestTime = PlayerPrefs.GetFloat(stageLevel.ToString());
+            bestTime = PlayerPrefs.GetFloat("stage"+stageLevel.ToString()+ "Score");
             recordUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bestTime.ToString("f2");
             // 1스테이지 8개 3/2/3
             // 2스테이지 16개  4 x 4
@@ -103,15 +103,11 @@ namespace KKS
 
             if (selectedCard1.data.Match(selectedCard2.data))
             {
-                // UI 별 출력
                 // UI 해당 TMI의 이름 출력
-                AudioManager.instance.PlayMusic(AudioManager.MusicType.Success);
-                selectedCard1.DestroyCard();
-                selectedCard2.DestroyCard();
-                selectedCard1 = null;
-                selectedCard2 = null;
+                Invoke("MatchSuccessInvoke", 0.5f);
+
+
             }
-            // 카드 매칭 실패 
             else
             {
                 Invoke("MatchFailInvoke", 0.5f);
@@ -119,15 +115,27 @@ namespace KKS
 
             
         }
+        void MatchSuccessInvoke()
+        {
+            // UI 해당 TMI의 이름 출력
+            UIEffectManager.instance.StartEffect(selectedCard1.gameObject, (UIEffectManager.UIType)2, new Vector3(0, 0, 0), selectedCard1.transform.position);
+            UIEffectManager.instance.StartEffect(selectedCard2.gameObject, (UIEffectManager.UIType)2, new Vector3(0, 0, 0), selectedCard1.transform.position);
+            AudioManager.instance.PlayMusic(AudioManager.MusicType.Success);
+            selectedCard1.DestroyCard();
+            selectedCard2.DestroyCard();
+            selectedCard1 = null;
+            selectedCard2 = null;
 
+        }
         void MatchFailInvoke()
         {
-            timeLimit -= 1.0f; // 실패할 경우 남은 시간 감소
+            timeLimit -= 1.0f;
+            // 실패 메세지 출력
+            // UI 색 바꾸기
             UIEffectManager.instance.StartEffect(selectedCard1.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
             UIEffectManager.instance.StartEffect(selectedCard2.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
-            // UI 색 바꾸기
             AudioManager.instance.PlayMusic(AudioManager.MusicType.Fail);
-            // 실패 메세지 출력
+            
             selectedCard1.CloseCard();
             selectedCard2.CloseCard();
 
@@ -135,17 +143,25 @@ namespace KKS
             selectedCard2 = null;
         }
 
+        
+
         void CardShuffle()
         {
-            if (stageLevel == 1)
+            switch (stageLevel)
             {
-                cardNum = 8;
+                case 1:
+                    cardNum = 8;
+                    break;
+                case 2:
+                    cardNum = 16;
+                    break;
+                case 3:
+                    cardNum = 24;
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                cardNum = 16;
-            }
-
+            
             int[] cards = new int[cardNum];
 
             for (int i = 0; i < cards.Length; i++)
@@ -193,7 +209,7 @@ namespace KKS
                     endY = cardSlot.transform.position.y -0.3f + i / 4 * 1.4f;
                 }
 
-                Vector3 endPos = new Vector3(endX, endY, 0); // 카드가 최종적으로 도착할 위치
+                Vector3 endPos = new Vector3(endX, endY, 0);
 
                 //UI 움직임 카드효과 호출
                 // 카드 효과에 따라서 startPos을 정하고 효과가 끝나면 endPos에 도달
@@ -258,15 +274,9 @@ namespace KKS
             AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
             AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic2);
 
-            if (stageLevel > 2)
-            {
-                GameEnd();
-                return;
-            }
-
             if (cardNum == 0)
             {
-                string stageKey = stageLevel.ToString();
+                string stageKey = "stage" + stageLevel.ToString() + "Score";
                 Time.timeScale = 0.0f;
 
                 if (!PlayerPrefs.HasKey(stageKey) || PlayerPrefs.HasKey(stageKey) && PlayerPrefs.GetFloat(stageKey) < timeLimit)
@@ -278,6 +288,12 @@ namespace KKS
                 GameInit(stageLevel + 1);
 
                 // 현재 스테이지의 기록을 저장
+            }
+
+            if (stageLevel > 2)
+            {
+                GameEnd();
+                return;
             }
         }
 

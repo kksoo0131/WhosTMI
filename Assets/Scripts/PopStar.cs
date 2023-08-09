@@ -32,7 +32,6 @@ public class PopStar : FixedEffectInterface
         if (mIsRun == false)
         {
             if (mStarPrefab == null) { return false; }
-            Debug.Log("PopStar Start");
             mStar = GameObject.Instantiate(mStarPrefab);
 
             if (_position != null)
@@ -67,7 +66,6 @@ public class PopStar : FixedEffectInterface
             }
             if (mTime > mAppearTime + mLastTime + mAppearTime)
             {
-                Debug.Log("PopStar Done");
                 GameObject.Destroy(mStar);
                 mStar = null;
                 ret = false;
@@ -95,7 +93,6 @@ public class PopStar : FixedEffectInterface
             GameObject.Destroy(mStar);
             mStar = null;
         }
-        Debug.Log("PopStar Cancel");
     }
 
     public bool IsEnd()
