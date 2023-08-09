@@ -11,7 +11,15 @@ public class UIEffectManager : MonoBehaviour
 
     public enum UIType
     {
-        MoveWave, MoveSpiral, MoveCenter, PopupStar, PopupSkull, PopupName, ReduceTime, ChangeColor, Flip
+        MoveWave,
+        MoveSpiral,
+        MoveCenter,
+        PopupStar,
+        PopupSkull,
+        PopupName,
+        ReduceTime,
+        ChangeColor,
+        Flip
     }
 
     private class EffectData
@@ -93,7 +101,7 @@ public class UIEffectManager : MonoBehaviour
         return true;
     }
 
-    
+
 
     private void Awake()
     {
@@ -108,7 +116,7 @@ public class UIEffectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
