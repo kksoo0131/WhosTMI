@@ -77,6 +77,8 @@ namespace KKS
         {
             if (isMatching) return;
 
+            if (selectedCard1 != null && _card == selectedCard1) return;
+
             if (!isSelected)
             {
                 selectedCard1 = _card;

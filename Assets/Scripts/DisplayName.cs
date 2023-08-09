@@ -32,7 +32,6 @@ public class DisplayName : FixedEffectInterface
         if (!isRun)
         {
             if (dnPrefab == null) { return false; }
-            Debug.Log("DisplayName Start");
             dn = GameObject.Instantiate(dnPrefab);
 
             if (_position != null)
@@ -74,7 +73,6 @@ public class DisplayName : FixedEffectInterface
             if (mTime > mAppearTime + mLastTime + mAppearTime)
             {
                 GameObject.Destroy(dn);
-                Debug.Log("DisplayName End");
                 dn = null;
                 running = false;
             }
@@ -97,7 +95,6 @@ public class DisplayName : FixedEffectInterface
             GameObject.Destroy(dn);
             dn = null;
         }
-        Debug.Log("PopSkull Cancel");
     }
 
     public bool IsEnd()
