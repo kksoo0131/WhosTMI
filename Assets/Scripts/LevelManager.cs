@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour
         {
             float bestScore = PlayerPrefs.GetFloat("stage" + (Level + 1).ToString() + "Score");
             SetLevel(Level + 1);
-            BestScoreText.text = bestScore.ToString();
+            BestScoreText.text = bestScore.ToString("F2");
         }
         else if (PlayerPrefs.HasKey("stage" + Level.ToString() + "Score"))
         {
