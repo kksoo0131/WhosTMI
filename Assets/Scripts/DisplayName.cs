@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisplayName : MonoBehaviour, FixedEffectInterface
+public class DisplayName : FixedEffectInterface
 {
     private bool isRun = false;
     private GameObject dnPrefab;
@@ -62,9 +62,9 @@ public class DisplayName : MonoBehaviour, FixedEffectInterface
             foreach (var item in mSpriteRenderer)
             {
                 if (mTime <= mAppearTime)
-                    Fade(item, mTime * 2f); // Fadein
+                    SetAlpha(item, mTime/ mAppearTime); // Fadein
                 else if (mTime >= mAppearTime + mLastTime)
-                    Fade(item, (mAppearTime + mLastTime + mAppearTime) - (mTime * 2f)); // Fadeout
+                    SetAlpha(item, ((mAppearTime + mLastTime + mAppearTime) - (mTime))/ mAppearTime); // Fadeout
                 // mAppearTime 동안 나타나고
                 // mLastTime 동안 유지되고
                 // mAppearTime 동안 사라진다.
@@ -81,10 +81,10 @@ public class DisplayName : MonoBehaviour, FixedEffectInterface
         return running;
     }
 
-    private void Fade(SpriteRenderer _item, float _delta)
+    private void SetAlpha(SpriteRenderer _item, float _delta)
     {
         Color tmp = _item.color;
-        tmp.a = Math.Clamp(tmp.a + _delta, 0f, 1f);
+        tmp.a = Math.Clamp(_delta, 0f, 1f);
         _item.color = tmp;
     }
 
