@@ -113,7 +113,8 @@ namespace KKS
             {
                 // GM 시간 감소 : 실제로 시간이 감소
                 // UI 시간 감소 효과 호출 : UI를 통해서 txt수정?
-                // UI 해골 출력
+                UIEffectManager.instance.StartEffect(selectedCard1.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
+                UIEffectManager.instance.StartEffect(selectedCard2.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
                 // UI 색 바꾸기
                 AudioManager.instance.PlayMusic(AudioManager.MusicType.Fail);
                 // 실패 메세지 출력
