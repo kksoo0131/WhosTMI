@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisplayName : MonoBehaviour, FixedEffectInterface
+public class DisplayName : FixedEffectInterface
 {
     private bool isRun = false;
     private GameObject dnPrefab;
