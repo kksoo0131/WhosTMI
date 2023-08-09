@@ -34,7 +34,10 @@ public class LevelManager : MonoBehaviour
             BestScoreText.text = bestScore.ToString("F2");
         }
         else
+        {
             BestScoreText.text = "0.00";
+            UP.SetActive(false);
+        }
         DOWN.SetActive(false);
     }
 
