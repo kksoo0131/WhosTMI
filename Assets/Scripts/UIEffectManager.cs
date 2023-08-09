@@ -126,7 +126,7 @@ public class UIEffectManager : MonoBehaviour
         int i = 0;
         foreach (EffectData data in mEffectList)
         {
-            if (data.Type <= UIType.MoveSpiral)
+            if (data.Position == null)
             {
                 var effect = data.effectClass as MoveEffectInterface;
                 var run = effect.Run(data.Object, data.Start, data.End);
