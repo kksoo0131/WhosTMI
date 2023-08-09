@@ -58,9 +58,9 @@ public class PopSkull : FixedEffectInterface
             foreach (var item in mSpriteRenderer)
             {
                 if (mTime <= mAppearTime)
-                    SetAlpha(item, mTime/ mAppearTime); // Fadein
+                    SetAlpha(item, mTime / mAppearTime); // Fadein
                 else if (mTime >= mAppearTime + mLastTime)
-                    SetAlpha(item, ((mAppearTime + mLastTime + mAppearTime) - (mTime))/ (mAppearTime)); // Fadeout
+                    SetAlpha(item, ((mAppearTime + mLastTime + mAppearTime) - (mTime)) / (mAppearTime)); // Fadeout
                 // mAppearTime 동안 나타나고
                 // mLastTime 동안 유지되고
                 // mAppearTime 동안 사라진다.
@@ -89,7 +89,7 @@ public class PopSkull : FixedEffectInterface
 
     public void Cancel()
     {
-        if (mSkull != null) 
+        if (mSkull != null)
         {
             GameObject.Destroy(mSkull);
             mSkull = null;

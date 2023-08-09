@@ -10,8 +10,8 @@ public class PopStar : FixedEffectInterface
     private GameObject mStar;
     private float mTime;
     private SpriteRenderer[] mSpriteRenderer;
-    private float mAppearTime = 0.2f;
-    private float mLastTime = 0.5f;
+    private float mAppearTime = 0.5f;
+    private float mLastTime = 0.2f;
 
     public PopStar()
     {
@@ -57,9 +57,9 @@ public class PopStar : FixedEffectInterface
             foreach (var item in mSpriteRenderer)
             {
                 if (mTime <= mAppearTime)
-                    Fade(item, mTime * 2f); // Fadein
+                    SetAlpha(item, mTime / mAppearTime); // Fadein
                 else if (mTime >= mAppearTime + mLastTime)
-                    Fade(item, (mAppearTime + mLastTime + mAppearTime) - (mTime * 2f)); // Fadeout
+                    SetAlpha(item, ((mAppearTime + mLastTime + mAppearTime) - (mTime)) / mAppearTime); // Fadeout
                 // mAppearTime 동안 나타나고
                 // mLastTime 동안 유지되고
                 // mAppearTime 동안 사라진다.
@@ -78,11 +78,11 @@ public class PopStar : FixedEffectInterface
     /// delta만큼 item의 alpha값을 변화시킨다.
     /// </summary>
     /// <param name="_item">오브젝트의 스프라이트 랜더러</param>
-    /// <param name="_delta">알파 변화값</param>
-    private void Fade(SpriteRenderer _item, float _delta)
+    /// <param name="_alpha">알파 변화값</param>
+    private void SetAlpha(SpriteRenderer _item, float _alpha)
     {
         Color tmp = _item.color;
-        tmp.a = Math.Clamp(tmp.a + _delta, 0f, 1f);
+        tmp.a = Math.Clamp(_alpha, 0f, 1f);
         _item.color = tmp;
     }
 
