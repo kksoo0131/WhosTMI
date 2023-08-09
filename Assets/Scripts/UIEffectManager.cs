@@ -69,7 +69,7 @@ public class UIEffectManager : MonoBehaviour
     {
         if (_object == null) { throw new System.Exception("null GameObject"); }
         if (_type > UIType.Flip) { throw new System.Exception("Unknown UI Effect"); }
-        if (_type > UIType.MoveCenter) { return false; }
+        //if (_type > UIType.MoveCenter) { return false; }
         // if (_start == null || _end == null) { return false; }
         mEffectList.Add(new EffectData(_object, _type, _start, _end));
         return true;
@@ -86,7 +86,7 @@ public class UIEffectManager : MonoBehaviour
     {
         if (_object == null) { throw new System.Exception("null GameObject"); }
         if (_type > UIType.Flip) { throw new System.Exception("Unknown UI Effect"); }
-        if (_type < UIType.PopupStar) { return false; }
+        //if (_type < UIType.PopupStar) { return false; }
         // if (_position == null) { return false; }
 
         mEffectList.Add(new EffectData(_object, _type, _position));
