@@ -16,6 +16,11 @@ public class CardObject : MonoBehaviour
 
     public void OpenCard()
     {
+        Invoke("OpenCardInvoke", 0.3f); 
+    }
+
+    void OpenCardInvoke()
+    {
         transform.Find("front").gameObject.SetActive(true);
         transform.Find("back").gameObject.SetActive(false);
     }
