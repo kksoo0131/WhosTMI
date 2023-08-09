@@ -22,7 +22,7 @@ public class NewBehaviourScript : MonoBehaviour
         //애니메이션의 대상이 될 게임오브젝트 지정
         filpAnime = _object.transform.GetComponent<Animator>();
         filpAnime.Play("filp");
-        return true;
+        return false;
     }
 
     public void Cancel()
@@ -33,7 +33,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
         else
         {
-            filpAnime.Play("unfilp");
+            //filpAnime.Play("unfilp");
         }
     }
 }
