@@ -1595,7 +1595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backGroundMusic1: {fileID: 8300000, guid: c4f1981c7eac7014392821f30a6bdf15, type: 3}
   backGroundMusic2: {fileID: 8300000, guid: c4f1981c7eac7014392821f30a6bdf15, type: 3}
-  Filp: {fileID: 8300000, guid: 488d024e7850d0040860433f6b39714c, type: 3}
+  Flip: {fileID: 8300000, guid: 488d024e7850d0040860433f6b39714c, type: 3}
   Success: {fileID: 8300000, guid: 2d221343f6ddb2b4d95c2d2b2bdfd812, type: 3}
   Fail: {fileID: 8300000, guid: 2d221343f6ddb2b4d95c2d2b2bdfd812, type: 3}
   audioSources:

@@ -26,7 +26,7 @@ public class UIEffectManager : MonoBehaviour
             // typeof(PopName),
             typeof(TimeDecayEffect),
             // typeof(ChangeColor),
-            // typeof(Flip)
+            typeof(Flip),
             };
         GameObject mEffectObject;
         UIType mType;

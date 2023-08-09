@@ -90,7 +90,8 @@ namespace KKS
                 CardMatch();
             }
 
-            AudioManager.instance.PlayMusic(AudioManager.MusicType.Filp);
+            AudioManager.instance.PlayMusic(AudioManager.MusicType.Flip);
+            UIEffectManager.instance.StartEffect(_card.gameObject, (UIEffectManager.UIType)5, new Vector3(0, 0, 0), _card.transform.position);
             _card.OpenCard();
             
 
@@ -107,20 +108,28 @@ namespace KKS
                 AudioManager.instance.PlayMusic(AudioManager.MusicType.Success);
                 selectedCard1.DestroyCard();
                 selectedCard2.DestroyCard();
+                selectedCard1 = null;
+                selectedCard2 = null;
             }
             // 카드 매칭 실패 
             else
             {
-                // GM 시간 감소 : 실제로 시간이 감소
-                // UI 시간 감소 효과 호출 : UI를 통해서 txt수정?
-                UIEffectManager.instance.StartEffect(selectedCard1.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
-                UIEffectManager.instance.StartEffect(selectedCard2.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
-                // UI 색 바꾸기
-                AudioManager.instance.PlayMusic(AudioManager.MusicType.Fail);
-                // 실패 메세지 출력
-                selectedCard1.CloseCard();
-                selectedCard2.CloseCard();
+                Invoke("MatchFailInvoke", 0.5f);
             }
+
+            
+        }
+
+        void MatchFailInvoke()
+        {
+            timeLimit -= 1.0f; // 실패할 경우 남은 시간 감소
+            UIEffectManager.instance.StartEffect(selectedCard1.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
+            UIEffectManager.instance.StartEffect(selectedCard2.gameObject, (UIEffectManager.UIType)3, new Vector3(0, 0, 0), selectedCard1.transform.position);
+            // UI 색 바꾸기
+            AudioManager.instance.PlayMusic(AudioManager.MusicType.Fail);
+            // 실패 메세지 출력
+            selectedCard1.CloseCard();
+            selectedCard2.CloseCard();
 
             selectedCard1 = null;
             selectedCard2 = null;
@@ -217,15 +226,17 @@ namespace KKS
 
             if (timeLimit < 10)
             {
+
+                if (timeLimit < 0)
+                {
+                    GameEnd();
+                    return;
+                }
                 AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
                 AudioManager.instance.PlayMusic(AudioManager.MusicType.backGroundMusic2);
                 UIEffectManager.instance.StartEffect(recordUI.transform.GetChild(0).gameObject, (UIEffectManager.UIType)4, recordUI.transform.GetChild(0).transform.position);
-                // timeLimit Image를 setTrue로 변경
             }
-            else if (timeLimit < 0)
-            {
-                GameEnd();
-            }
+             
 
             if (isSelected)
             {

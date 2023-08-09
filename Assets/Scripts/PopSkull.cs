@@ -33,7 +33,6 @@ public class PopSkull : FixedEffectInterface
         if (mIsRun == false)
         {
             if (mSkullPrefab == null) { return false; }
-            Debug.Log("PopSkull Start");
             mSkull = GameObject.Instantiate(mSkullPrefab);
 
             if (_position != null)
@@ -68,7 +67,6 @@ public class PopSkull : FixedEffectInterface
             }
             if (mTime > mAppearTime + mLastTime + mAppearTime)
             {
-                Debug.Log("PopSkull Done");
                 GameObject.Destroy(mSkull);
                 mSkull = null;
                 ret = false;
@@ -96,7 +94,6 @@ public class PopSkull : FixedEffectInterface
             GameObject.Destroy(mSkull);
             mSkull = null;
         }
-        Debug.Log("PopSkull Cancel");
     }
 
     public bool IsEnd()
