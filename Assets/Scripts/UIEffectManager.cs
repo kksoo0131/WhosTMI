@@ -13,7 +13,7 @@ public class UIEffectManager : MonoBehaviour
     {
         MoveWave,
         MoveSpiral,
-        //MoveCenter,
+        MoveCenter,
         PopupStar,
         PopupSkull,
         PopupName,
@@ -28,7 +28,7 @@ public class UIEffectManager : MonoBehaviour
             // Effect class 를 나열해서 넣어둠.
             typeof(Wave),
             typeof(Spiral),
-            // typeof(Center),
+            typeof(Center),
             typeof(PopStar),
             typeof(PopSkull),
             typeof(DisplayName),
@@ -126,7 +126,7 @@ public class UIEffectManager : MonoBehaviour
         int i = 0;
         foreach (EffectData data in mEffectList)
         {
-            if (data.Type <= UIType.MoveSpiral)
+            if (data.Type <= UIType.MoveCenter)
             {
                 var effect = data.effectClass as MoveEffectInterface;
                 var run = effect.Run(data.Object, data.Start, data.End);
