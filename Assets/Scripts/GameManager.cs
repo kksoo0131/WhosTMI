@@ -181,9 +181,20 @@ namespace KKS
             
             int[] cards = new int[cardNum];
 
+            List<int> numbers = Enumerable.Range(0, 9).ToList();
+            List<int> selected = new List<int>();
+
+            while(selected.Count() < cardNum/2)
+            {
+                int index = Random.Range(0, numbers.Count);
+                int selectedNumber = numbers[index];
+                selected.Add(selectedNumber);
+                numbers.RemoveAt(index);
+            }
+
             for (int i = 0; i < cards.Length; i++)
             {
-                cards[i] = i / 2;
+                cards[i] = selected[i / 2];
             }
 
             cards = cards.OrderBy(x => Random.Range(-1.0f, 1.0f)).ToArray();
