@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Center : MonoBehaviour, MoveEffectInterface
+public class Center : MoveEffectInterface
 {
     private bool mIsRun;
     private GameObject mTarget;
@@ -51,7 +51,6 @@ public class Center : MonoBehaviour, MoveEffectInterface
     {
         if (mEnd != null)
         {
-            Debug.Log("Center Cancel");
             mTarget.transform.position = (Vector3)mEnd;
             mIsRun = false;
         }
@@ -73,8 +72,7 @@ public class Center : MonoBehaviour, MoveEffectInterface
             ret.x = _now.x + moveX;
             ret.y = _now.y + moveY;
             ret.z = mEnd.Value.z;
-        }
-        Debug.Log(ret);   
+        } 
         return ret;
     }
 }

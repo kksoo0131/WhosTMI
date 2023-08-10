@@ -181,12 +181,36 @@ namespace KKS
             
             int[] cards = new int[cardNum];
 
-            for (int i = 0; i < cards.Length; i++)
+            List<int> numbers = Enumerable.Range(0, 9).ToList();
+            List<int> selected = new List<int>();
+
+            while(selected.Count() < cardNum/2)
             {
-                cards[i] = i / 2;
+                int index = Random.Range(0, numbers.Count);
+                int selectedNumber = numbers[index];
+                selected.Add(selectedNumber);
+                numbers.RemoveAt(index);
             }
 
+            for (int i = 0; i < cards.Length; i++)
+            {
+                cards[i] = selected[i / 2];
+            }
+            /*
             cards = cards.OrderBy(x => Random.Range(-1.0f, 1.0f)).ToArray();
+            */
+            //다른 방법으로 카드 섞기.
+            int random1, random2, temp;
+
+            for (int i = 0; i < cards.Length ; ++i)
+            {
+                random1 = Random.Range(0, cards.Length);
+                random2 = Random.Range(0, cards.Length);
+
+                temp = cards[random1];
+                cards[random1] = cards[random2];
+                cards[random2] = temp;
+            }
 
             for (int i = 0; i < cards.Length; i++)
             {
@@ -245,7 +269,7 @@ namespace KKS
                         UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveSpiral, new Vector3(0, 0, 0), endPos);
                         break;
                     case 3:
-                        UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveWave, new Vector3(0, 0, 0), endPos);
+                        UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveCenter, new Vector3(0, 0, 0), endPos);
                         break;
                     case 4:
                         UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveSpiral, new Vector3(0, 0, 0), endPos);
