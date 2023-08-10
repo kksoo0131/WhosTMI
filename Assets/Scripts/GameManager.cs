@@ -185,8 +185,21 @@ namespace KKS
             {
                 cards[i] = i / 2;
             }
-
+            /*
             cards = cards.OrderBy(x => Random.Range(-1.0f, 1.0f)).ToArray();
+            */
+            //다른 방법으로 카드 섞기.
+            int random1, random2, temp;
+
+            for (int i = 0; i < cards.Length ; ++i)
+            {
+                random1 = Random.Range(0, cards.Length);
+                random2 = Random.Range(0, cards.Length);
+
+                temp = cards[random1];
+                cards[random1] = cards[random2];
+                cards[random2] = temp;
+            }
 
             for (int i = 0; i < cards.Length; i++)
             {
