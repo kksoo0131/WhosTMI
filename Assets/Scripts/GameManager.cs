@@ -71,6 +71,7 @@ namespace KKS
             stageUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _stage.ToString();
             bestTime = PlayerPrefs.GetFloat("stage"+stageLevel.ToString()+ "Score");
             recordUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bestTime.ToString("f2");
+            recordUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
 
             Time.timeScale = 1.0f;
 
