@@ -308,7 +308,7 @@ namespace KKS
                     isTimeLimit = true;
                     AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
                     AudioManager.instance.PlayMusic(AudioManager.MusicType.backGroundMusic2);
-                    UIEffectManager.instance.StartEffect(recordUI.transform.GetChild(0).gameObject, (UIEffectManager.UIType)5, recordUI.transform.GetChild(0).transform.position);
+                    UIEffectManager.instance.StartEffect(recordUI.transform.GetChild(0).gameObject, UIEffectManager.UIType.ReduceTime, recordUI.transform.GetChild(0).transform.position);
                 }
                 
                 
