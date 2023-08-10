@@ -258,14 +258,23 @@ namespace KKS
         void TimerEffect()
         {
             timeLimit -= Time.deltaTime;
-            recordUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = timeLimit.ToString("f2");
+            if(timeLimit <= 0)
+            {
+                recordUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "0.00";
+            }
+            else
+            {
+                recordUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = timeLimit.ToString("f2");
+            }
+
 
 
             if (timeLimit < 10)
             {
 
-                if (timeLimit < 0)
+                if (timeLimit <= 0)
                 {
+                    timeLimit = 0;
                     GameEnd();
                     return;
                 }
