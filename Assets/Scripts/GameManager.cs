@@ -181,7 +181,7 @@ namespace KKS
             
             int[] cards = new int[cardNum];
 
-            List<int> numbers = Enumerable.Range(0, 8).ToList();
+            List<int> numbers = Enumerable.Range(0, 9).ToList();
             List<int> selected = new List<int>();
 
             while(selected.Count() < cardNum/2)
