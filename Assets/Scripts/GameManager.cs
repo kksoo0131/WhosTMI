@@ -27,8 +27,10 @@ namespace KKS
         int tryNum;
         float selectTime;
         float bestTime;
-        bool isSelected = false;
-        
+        bool isSelected;
+        bool isTimeLimit;
+
+
         GameObject cardSlot;
         GameObject card;
         CardObject selectedCard1;
@@ -64,6 +66,8 @@ namespace KKS
             tryNum = 0;
             selectTime = 3.0f;
             CardShuffle();
+            isTimeLimit = false;
+            isSelected = false;
             stageUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _stage.ToString();
             bestTime = PlayerPrefs.GetFloat("stage"+stageLevel.ToString()+ "Score");
             recordUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bestTime.ToString("f2");
@@ -265,9 +269,16 @@ namespace KKS
                     GameEnd();
                     return;
                 }
-                AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
-                AudioManager.instance.PlayMusic(AudioManager.MusicType.backGroundMusic2);
-                UIEffectManager.instance.StartEffect(recordUI.transform.GetChild(0).gameObject, (UIEffectManager.UIType)5, recordUI.transform.GetChild(0).transform.position);
+
+                if (isTimeLimit == false)
+                {
+                    isTimeLimit = true;
+                    AudioManager.instance.CancelMusic(AudioManager.MusicType.backGroundMusic1);
+                    AudioManager.instance.PlayMusic(AudioManager.MusicType.backGroundMusic2);
+                    UIEffectManager.instance.StartEffect(recordUI.transform.GetChild(0).gameObject, (UIEffectManager.UIType)5, recordUI.transform.GetChild(0).transform.position);
+                }
+                
+                
             }
              
 
