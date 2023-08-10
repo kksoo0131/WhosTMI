@@ -245,7 +245,7 @@ namespace KKS
                         UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveSpiral, new Vector3(0, 0, 0), endPos);
                         break;
                     case 3:
-                        UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveWave, new Vector3(0, 0, 0), endPos);
+                        UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveCenter, new Vector3(0, 0, 0), endPos);
                         break;
                     case 4:
                         UIEffectManager.instance.StartEffect(newcard, UIEffectManager.UIType.MoveSpiral, new Vector3(0, 0, 0), endPos);
