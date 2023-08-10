@@ -68,7 +68,7 @@ public class Spiral : MoveEffectInterface
         float r1 = (_now - (Vector3)mEnd).magnitude;
         float r2 = r1 - mSpeed * Time.deltaTime;
         float divisor = r2 / r1;
-        if ((_now - (Vector3)mEnd).magnitude < 0.01f) { mIsRun = false; }
+        if ((_now - (Vector3)mEnd).magnitude < 0.1f) { mIsRun = false; }
         else
         {
             ret.x = mEnd.Value.x + ((_now.x - mEnd.Value.x) * (1 - Mathf.Pow(mAngleSpeed * Time.deltaTime / 2, 2)) - (_now.y - mEnd.Value.y) * mAngleSpeed * Time.deltaTime) *divisor;
