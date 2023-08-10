@@ -16,9 +16,12 @@ public class AudioManager : MonoBehaviour
         for (int i = 0; i < audioSources.Length; i++)
         {
             audioSources[i] = gameObject.AddComponent<AudioSource>();
+            audioSources[i].volume = 0.1f;
+
         }
         audioSources[(int)MusicType.backGroundMusic1].clip = backGroundMusic1;
         audioSources[(int)MusicType.backGroundMusic2].clip = backGroundMusic2;
+        audioSources[(int)MusicType.backGroundMusic2].pitch = 1.5f;
         audioSources[(int)MusicType.Flip].clip = Flip;
         audioSources[(int)MusicType.Success].clip = Success;
         audioSources[(int)MusicType.Fail].clip = Fail;
